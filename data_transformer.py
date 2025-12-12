@@ -7,11 +7,11 @@ def load_and_clean_original_data():
     加载和清理原始数据
     """
     # 读取原始Excel文件，跳过前两行
-    df = pd.read_excel('original.xlsx', skiprows=2)
+    df = pd.read_excel('original.xlsx')
     
     # 手动映射列名（基于观察到的数据结构）
     column_mapping = {
-        'Unnamed: 0': 'outcome',
+        'outcome': 'outcome',
         '2.4-3.9（最低检测限是1.1，小于1.1按1.1算）': 'C_G',
         '<100': 'C_WBC',
         0: 'C_RBC',
@@ -33,10 +33,11 @@ def load_and_clean_original_data():
         '<0.5': 'B_PCT',
         '0-2': 'B_AC',
         'Unnamed: 21': 'unused1',  # 空列
-        'Unnamed: 22': 'ID',  # 修正：第22列是真正的ID
-        'Unnamed: 23': 'date',
-        'Unnamed: 24': 'diagnosis',
-        'Unnamed: 25': 'B_RBC'
+        'Unnamed: 22': 'B_RBC',
+        'Unnamed: 23': 'ID',  # 修正：第22列是真正的ID
+        'Unnamed: 24': 'date',
+        'Unnamed: 2': 'diagnosis',
+   
     }
     
     # 重命名列
@@ -46,7 +47,7 @@ def load_and_clean_original_data():
     df = df.dropna(how='all')
     
     # 移除第一行（包含列名信息的行）
-    if len(df) > 0 and df.iloc[0]['outcome'] == 'outcome':
+    if len(df) > 0 and 'outcome' in df.columns and df.iloc[0]['outcome'] == 'outcome':
         df = df.iloc[1:].reset_index(drop=True)
     
     print(f"清理后数据形状: {df.shape}")
@@ -211,7 +212,7 @@ def main():
     
     # 4. 生成AMFormer可直接使用的数据
     print("\n4. 生成AMFormer训练数据")
-    encoded_columns = [col for col in df_encoded.columns if col.endswith('_encoded')]
+    encoded_columns = [col for col in df_encoded.columns if isinstance(col, str) and col.endswith('_encoded')]
     amformer_columns = ['ID'] + encoded_columns
     
     # 创建AMFormer数据集
@@ -224,7 +225,10 @@ def main():
     # 保存AMFormer数据
     amformer_file = "转化后_编码数据_最终版本.csv"
     amformer_df.to_csv(amformer_file, index=False, encoding='utf-8-sig')
-   
+    print(f"✅ AMFormer训练数据已保存到: {amformer_file}")
+    print(f"✅ AMFormer数据形状: {amformer_df.shape}")
+    print("✅ 现在可以直接运行 train_amformer.py 了！")
+    
     # 5. 显示转换统计
     print("\n5. 转换统计:")
     for col in encoded_columns:
