@@ -1,0 +1,108 @@
+[
+  {
+    "record_id": "CASE-1777909956366",
+    "assessment_type": "static",
+    "patient_info": {
+      "patient_id": "P1777909907508",
+      "inpatient_no": "",
+      "patient_name": "陈小云",
+      "sex_text": "",
+      "age": 0.0,
+      "department": "",
+      "bed_no": "",
+      "sampling_time": "",
+      "doctor_name": "",
+      "diagnosis_note": ""
+    },
+    "input_data": {
+      "static_inputs": {
+        "age": 56,
+        "C_G": 1.3,
+        "C_WBC": 3188,
+        "C_RBC": 3300,
+        "C_P": 1.85,
+        "C_N": 0.82,
+        "GCS": 13,
+        "tem": 38.2,
+        "B_G": 5.6,
+        "B_CRP": 45,
+        "B_WBC": 10.6,
+        "B_N": 0.79,
+        "B_Lym": 0.13,
+        "B_PCT": 0.42,
+        "B_AC": 0,
+        "B_RBC": 4.2,
+        "sex": 1,
+        "tube": 1,
+        "site": 0,
+        "other_inf": 0,
+        "transparency": 1
+      },
+      "dynamic_rows": [
+        {
+          "sample_time": "2026-05-04T15:51",
+          "C_WBC": "",
+          "C_RBC": "",
+          "C_N": "",
+          "C_P": "",
+          "C_G": "",
+          "transparency": ""
+        },
+        {
+          "sample_time": "2026-05-04T15:51",
+          "C_WBC": "",
+          "C_RBC": "",
+          "C_N": "",
+          "C_P": "",
+          "C_G": "",
+          "transparency": ""
+        }
+      ]
+    },
+    "prediction": {
+      "auto_dynamic": false,
+      "clinical_notice": "本结果为感染风险辅助评估结果，不作为最终诊断依据。",
+      "dynamic_residual_logit": 0,
+      "dynamic_weight": 0,
+      "evaluation_time": "2026-05-04 23:52",
+      "final_mode": "static",
+      "importance": {
+        "B_CRP": 0.43,
+        "C_G": 0.82,
+        "C_P": 0.58,
+        "C_WBC": 0.76,
+        "GCS": 0.32
+      },
+      "load_messages": [
+        "已加载 pga2.py",
+        "已加载 dyn_scaler_fold1.joblib",
+        "已加载 static_scaler_fold1.joblib",
+        "已加载 cat_encoder_fold1.joblib",
+        "已加载静态模型 best_fold1.pth：embed_dim=64, layers=2",
+        "已加载动态完整模型 dynamic_full_model_fold1.pth：dyn_dim=60"
+      ],
+      "main_risk_factors": [
+        "脑脊液糖降低",
+        "脑脊液白细胞升高",
+        "脑脊液蛋白升高",
+        "CRP升高"
+      ],
+      "model_status": "static_real",
+      "model_version": "PGA-AMFormer v1.0",
+      "percentage": 51.13,
+      "probability": 0.5113,
+      "requested_mode": "static",
+      "risk_key": "mid",
+      "risk_label": "中风险",
+      "static_percentage": 51.13,
+      "static_probability": 0.5113,
+      "suggestion": "模型给出感染风险辅助评估：存在一定风险。建议结合复查结果进行动态随访。"
+    },
+    "risk_label": "中风险",
+    "percentage": 51.13,
+    "evaluation_time": "2026-05-04 23:52",
+    "model_version": "PGA-AMFormer v1.0",
+    "operator": "",
+    "created_at": "2026-05-04 23:52"
+  }
+]

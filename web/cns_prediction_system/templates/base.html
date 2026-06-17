@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ system_name }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v='20260520-active') }}">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+<body class="{% if not current_user %}login-body{% endif %}">
+{% if current_user %}
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">CNS</div>
+            <div>
+                <strong>感染风险预测</strong>
+                <span>Clinical DSS</span>
+            </div>
+        </div>
+        <nav class="nav">
+            {% if current_user.role == 'admin' %}
+            <a class="{% if request.endpoint in ['users', 'user_new'] %}active{% endif %}" href="{{ url_for('users') }}">账号管理</a>
+            <a class="{% if request.endpoint in ['model_versions', 'model_version_new', 'model_version_enable', 'model_version_delete'] %}active{% endif %}" href="{{ url_for('model_versions') }}">模型版本</a>
+            <a class="{% if request.endpoint == 'logs' %}active{% endif %}" href="{{ url_for('logs') }}">操作日志</a>
+            {% else %}
+            <a class="{% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">首页</a>
+            <a class="{% if request.endpoint in ['patients', 'patient_detail', 'case_new', 'case_detail', 'case_edit', 'case_repredict', 'case_delete', 'prediction_detail', 'report'] %}active{% endif %}" href="{{ url_for('patients') }}">患者管理</a>
+            <a class="{% if request.endpoint == 'patient_new' %}active{% endif %}" href="{{ url_for('patient_new') }}">新增患者</a>
+            <a class="{% if request.endpoint == 'patient_import' %}active{% endif %}" href="{{ url_for('patient_import') }}">批量导入</a>
+            <a class="{% if request.endpoint == 'model_versions' %}active{% endif %}" href="{{ url_for('model_versions') }}">模型版本</a>
+            {% endif %}
+        </nav>
+    </aside>
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <h1>{% block page_title %}{{ system_name }}{% endblock %}</h1>
+                <p>Clinical Decision Support System for CNS Infection Risk Prediction</p>
+            </div>
+            <div class="user-box">
+                <span>{{ current_user.real_name or current_user.username }}</span>
+                <small>{{ current_user.department or current_user.role }}</small>
+                <a class="btn btn-ghost" href="{{ url_for('logout') }}">退出</a>
+            </div>
+        </header>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-wrap">
+                {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+        <section class="content">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+</div>
+{% else %}
+    {% block auth_content %}{% endblock %}
+{% endif %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

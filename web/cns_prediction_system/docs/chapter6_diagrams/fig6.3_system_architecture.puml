@@ -1,0 +1,34 @@
+@startuml
+title 图6.3 系统总体架构图
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam ArrowColor #374151
+skinparam RectangleBorderColor #374151
+skinparam RectangleBackgroundColor #F8FAFC
+skinparam PackageBorderColor #64748B
+skinparam PackageBackgroundColor #F8FAFC
+
+rectangle "前端表现层（Jinja2 + HTML/CSS/JavaScript + ECharts）" {
+  [登录页] [首页仪表盘] [患者列表/详情] [病例录入/导入] [预测详情/报告] [日志/模型版本]
+}
+rectangle "请求与页面渲染层（Flask路由）" {
+  [登录校验] [表单提交] [文件上传] [页面渲染] [会话管理]
+}
+rectangle "后端业务服务层（Flask Services）" {
+  [auth_service] [patient_service] [case_service] [import_service] [prediction_service] [report_service] [log_service]
+}
+rectangle "模型推理层（web_model + real_model适配器）" {
+  [静态PGA-AMFormer]
+  [动态D-PGA-AMFormer]
+  [Scaler/Encoder]
+  [缺失值容错预处理]
+}
+database "数据持久层（SQLite）" {
+  [users] [patients] [cases] [predictions] [operation_logs] [model_versions]
+}
+cloud "部署运行层（阿里云ECS）" {
+  [Nginx反向代理] [Gunicorn] [Flask应用] [SQLite文件] [web_model模型文件]
+}
+@enduml

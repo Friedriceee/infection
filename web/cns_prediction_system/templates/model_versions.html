@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block page_title %}模型版本{% endblock %}
+{% block content %}
+<section class="card">
+    {% if current_user.role == "admin" %}
+    <div class="card-title">
+        <h2>模型版本管理</h2>
+        <a class="btn btn-primary" href="{{ url_for('model_version_new') }}">新增模型版本</a>
+    </div>
+    {% endif %}
+    <table>
+        <thead><tr><th>模型名称</th><th>模型类型</th><th>版本</th><th>状态</th><th>说明</th><th>更新时间</th>{% if current_user.role == "admin" %}<th>操作</th>{% endif %}</tr></thead>
+        <tbody>
+        {% for model in model_versions %}
+        <tr>
+            <td>{{ model.model_name }}</td>
+            <td>{{ "静态模型" if model.model_type == "static" else "动态模型" }}</td>
+            <td>{{ model.model_version }}</td>
+            <td><span class="status-pill">{{ model.status }}</span></td>
+            <td>{{ model.description }}</td>
+            <td>{{ model.updated_at }}</td>
+            {% if current_user.role == "admin" %}
+            <td class="actions">
+                {% if model.status != "enabled" %}
+                <form method="post" action="{{ url_for('model_version_enable', version_id=model.id) }}">
+                    <button class="link-button" type="submit">设为当前</button>
+                </form>
+                <form method="post" action="{{ url_for('model_version_delete', version_id=model.id) }}" data-confirm="确定删除该模型版本吗？">
+                    <button class="link-button danger-text" type="submit">删除</button>
+                </form>
+                {% else %}
+                <span class="muted">当前版本</span>
+                {% endif %}
+            </td>
+            {% endif %}
+        </tr>
+        {% else %}
+        <tr><td colspan="{% if current_user.role == 'admin' %}7{% else %}6{% endif %}" class="empty">暂无模型版本</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

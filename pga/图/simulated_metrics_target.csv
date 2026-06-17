@@ -1,0 +1,5 @@
+﻿data_type,model_version,prior_attention,prior_arithmetic,auc,precision,recall,f1,ap,note,mcc
+simulated_for_plotting_only,原始 AMFormer,×,×,0.893,0.497,0.943,0.649,0.81,Simulated plotting data only; not real experimental results. Target metrics updated for plotting consistency.,
+simulated_for_plotting_only,+PGA-Attention,√,×,0.902,0.612,0.911,0.731,0.826,Simulated plotting data only; not real experimental results. Target metrics updated for plotting consistency.,
+simulated_for_plotting_only,+PGA-Arithmetic,×,√,0.898,0.587,0.924,0.718,0.82,Simulated plotting data only; not real experimental results. Target metrics updated for plotting consistency.,
+simulated_for_plotting_only,完整 PGA-AMFormer,√,√,0.9217,0.6431,0.9606,0.7704,0.8607,Simulated plotting data only; not real experimental results. Target metrics updated for plotting consistency.,0.6805

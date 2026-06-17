@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block page_title %}患者详情{% endblock %}
+{% block content %}
+<section class="card">
+    <div class="detail-header">
+        <div>
+            <h2>{{ patient.name }} <span>{{ patient.patient_no }}</span></h2>
+            <p>{{ patient.sex }} · {{ patient.age }} 岁 · {{ patient.department or "未填写科室" }}</p>
+        </div>
+        <div class="risk-summary">
+            <span>当前风险概率</span>
+            <strong>{{ "%.0f"|format((patient.current_risk_score or 0) * 100) }}%</strong>
+            <em class="risk-badge {{ risk_badge_class(patient.current_risk_level) }}">{{ patient.current_risk_level or "未预测" }}</em>
+        </div>
+    </div>
+    <div class="info-grid">
+        <div><span>住院号</span>{{ patient.inpatient_no or "-" }}</div>
+        <div><span>门诊号</span>{{ patient.outpatient_no or "-" }}</div>
+        <div><span>入院时间</span>{{ patient.admission_time or "-" }}</div>
+        <div><span>备注</span>{{ patient.remark or "-" }}</div>
+    </div>
+    <div class="action-row">
+        <a class="btn btn-primary" href="{{ url_for('case_new', patient_id=patient.id) }}">新增病例</a>
+        <a class="btn" href="{{ url_for('report', patient_id=patient.id) }}">查看报告</a>
+        <a class="btn" href="{{ url_for('patients') }}">返回患者列表</a>
+        <form method="post" action="{{ url_for('patient_delete', patient_id=patient.id) }}" data-confirm="确定删除/标记出院该患者吗？相关病例和预测记录将一并作废。">
+            <button class="btn btn-danger" type="submit">删除/出院</button>
+        </form>
+    </div>
+</section>
+
+<section class="card">
+    <div class="card-title"><h2>病例时间轴</h2></div>
+    <div class="timeline">
+        {% for case in cases %}
+        <a href="{{ url_for('case_detail', case_id=case.id) }}">
+            <strong>T{{ loop.index }}</strong>
+            <span>{{ "首次检查" if loop.index == 1 else "第" ~ loop.index ~ "次检查" }}</span>
+            <small>{{ case.visit_time }}</small>
+        </a>
+        {% else %}
+        <div class="empty">暂无病例记录</div>
+        {% endfor %}
+    </div>
+</section>
+
+{% if cases|length >= 2 %}
+    <div class="two-col">
+        <section class="card">
+            <div class="card-title"><h2>风险趋势图</h2></div>
+            <div id="riskChart" class="chart" data-chart='{{ chart_data.risk | tojson }}'></div>
+        </section>
+        <section class="card">
+            <div class="card-title"><h2>核心指标趋势图</h2></div>
+            <div id="indicatorChart" class="chart" data-chart='{{ chart_data.indicators | tojson }}'></div>
+        </section>
+    </div>
+{% endif %}
+
+<section class="card">
+    <div class="card-title"><h2>病例记录列表</h2></div>
+    <table>
+        <thead><tr><th>检查时间</th><th>脑脊液白细胞</th><th>脑脊液蛋白</th><th>脑脊液葡萄糖</th><th>静态预测</th><th>动态预测</th><th>操作</th></tr></thead>
+        <tbody>
+        {% for case in cases %}
+        <tr>
+            <td>{{ case.visit_time }}</td>
+            <td>{{ case.C_WBC or "-" }}</td>
+            <td>{{ case.C_P or "-" }}</td>
+            <td>{{ case.C_G or "-" }}</td>
+            <td>{{ "已完成" if static_cases.get(case.id) else "未完成" }}</td>
+            <td>{{ "已完成" if dynamic_cases.get(case.id) else "未生成" }}</td>
+            <td class="actions">
+                <a href="{{ url_for('case_detail', case_id=case.id) }}">详情</a>
+                <a href="{{ url_for('case_edit', case_id=case.id) }}">编辑</a>
+                <form method="post" action="{{ url_for('case_delete', case_id=case.id) }}" data-confirm="确定删除该病例吗？关联预测记录将作废。">
+                    <button class="link-button danger-text" type="submit">删除</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="empty">暂无病例记录</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section class="card">
+    <div class="card-title"><h2>历史预测记录</h2></div>
+    <table>
+        <thead><tr><th>预测时间</th><th>预测类型</th><th>风险概率</th><th>风险等级</th><th>模型名称</th><th>模型版本</th><th>查看详情</th></tr></thead>
+        <tbody>
+        {% for item in predictions %}
+        <tr>
+            <td>{{ item.created_at }}</td>
+            <td>{{ "静态预测" if item.prediction_type == "static" else "动态预测" }}</td>
+            <td>{{ "%.0f"|format(item.risk_score * 100) }}%</td>
+            <td><span class="risk-badge {{ risk_badge_class(item.risk_level) }}">{{ item.risk_level }}</span></td>
+            <td>{{ item.model_name }}</td>
+            <td>{{ item.model_version }}</td>
+            <td><a href="{{ url_for('prediction_detail', prediction_id=item.id) }}">查看</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="empty">暂无预测记录</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
+{% block scripts %}
+{% if cases|length >= 2 %}
+<script>window.renderPatientCharts && window.renderPatientCharts();</script>
+{% endif %}
+{% endblock %}

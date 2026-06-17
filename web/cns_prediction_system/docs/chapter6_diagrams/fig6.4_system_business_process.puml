@@ -1,0 +1,41 @@
+@startuml
+title 图6.4 系统业务流程图
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam ArrowColor #374151
+skinparam RectangleBorderColor #374151
+skinparam RectangleBackgroundColor #F8FAFC
+skinparam PackageBorderColor #64748B
+skinparam PackageBackgroundColor #F8FAFC
+
+start
+:医生登录系统;
+:首页仪表盘;
+if (是否已有患者?) then (否)
+  :新增患者或Excel批量导入;
+else (是)
+  :查询并选择患者;
+endif
+:录入单次病例或动态批量导入;
+:保存检测记录到cases表;
+:调用静态PGA-AMFormer模型;
+:保存静态预测到predictions表;
+if (患者病例数 >= 2?) then (是)
+  :读取同一患者历史病例;
+  :按检查时间构造多时间点序列;
+  :调用动态D-PGA-AMFormer模型;
+  :保存动态预测结果;
+else (否)
+  :仅保留静态风险结果;
+endif
+:更新患者当前风险概率和风险等级;
+if (病例数 >= 2?) then (是)
+  :展示风险趋势图和指标趋势图;
+else (否)
+  :不展示趋势图，提示样本不足;
+endif
+:生成辅助决策报告并支持打印;
+stop
+@enduml

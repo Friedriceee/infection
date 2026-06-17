@@ -1,0 +1,92 @@
+@startuml
+title 图6.2 系统数据库E-R图
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam ArrowColor #374151
+skinparam RectangleBorderColor #374151
+skinparam RectangleBackgroundColor #F8FAFC
+skinparam PackageBorderColor #64748B
+skinparam PackageBackgroundColor #F8FAFC
+
+entity users {
+  * id : INTEGER <<PK>>
+  --
+  username : TEXT <<UNIQUE>>
+  password_hash : TEXT
+  role : TEXT
+  real_name : TEXT
+  department : TEXT
+  last_login_at : TEXT
+  is_active : INTEGER
+}
+entity patients {
+  * id : INTEGER <<PK>>
+  --
+  patient_no : TEXT <<UNIQUE>>
+  name : TEXT
+  sex : TEXT
+  age : INTEGER
+  department : TEXT
+  admission_time : TEXT
+  current_risk_score : REAL
+  current_risk_level : TEXT
+  is_deleted : INTEGER
+}
+entity cases {
+  * id : INTEGER <<PK>>
+  --
+  patient_id : INTEGER <<FK>>
+  visit_time : TEXT
+  doctor_id : INTEGER <<FK>>
+  temperature : REAL
+  gcs : REAL
+  site : TEXT
+  other_inf : TEXT
+  B_CRP/B_PCT : REAL
+  C_WBC/C_P/C_G/C_N : REAL
+  is_deleted : INTEGER
+}
+entity predictions {
+  * id : INTEGER <<PK>>
+  --
+  patient_id : INTEGER <<FK>>
+  case_id : INTEGER <<FK>>
+  prediction_type : TEXT
+  model_name : TEXT
+  model_version : TEXT
+  risk_score : REAL
+  risk_level : TEXT
+  static_score : REAL
+  dynamic_delta : REAL
+  input_snapshot : TEXT
+  result_json : TEXT
+}
+entity operation_logs {
+  * id : INTEGER <<PK>>
+  --
+  user_id : INTEGER <<FK>>
+  action : TEXT
+  target_type : TEXT
+  target_id : INTEGER
+  ip_address : TEXT
+  created_at : TEXT
+}
+entity model_versions {
+  * id : INTEGER <<PK>>
+  --
+  model_name : TEXT
+  model_version : TEXT
+  model_type : TEXT
+  description : TEXT
+  status : TEXT
+  updated_at : TEXT
+}
+patients ||--o{ cases
+patients ||--o{ predictions
+cases ||--o{ predictions
+users ||--o{ cases
+users ||--o{ predictions
+users ||--o{ operation_logs
+@enduml

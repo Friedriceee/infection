@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block page_title %}新增模型版本{% endblock %}
+{% block content %}
+<section class="card form-card">
+    <form method="post" class="form">
+        <div class="form-grid">
+            <label>模型名称
+                <input name="model_name" value="{{ model.model_name or '' }}" placeholder="PGFormer 或 D-PGFormer" required>
+            </label>
+            <label>模型类型
+                <select name="model_type" required>
+                    <option value="static" {% if model.model_type == "static" %}selected{% endif %}>静态模型</option>
+                    <option value="dynamic" {% if model.model_type == "dynamic" %}selected{% endif %}>动态模型</option>
+                </select>
+            </label>
+            <label>版本
+                <input name="model_version" value="{{ model.model_version or '' }}" placeholder="v1.0" required>
+            </label>
+            <label>状态
+                <select name="status">
+                    <option value="disabled" {% if model.status != "enabled" %}selected{% endif %}>disabled</option>
+                    <option value="enabled" {% if model.status == "enabled" %}selected{% endif %}>enabled</option>
+                </select>
+            </label>
+            <label>输入特征
+                <input name="input_features" value="{{ model.input_features or '' }}">
+            </label>
+        </div>
+        <label>说明
+            <textarea name="description" rows="4">{{ model.description or '' }}</textarea>
+        </label>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">保存模型版本</button>
+            <a class="btn" href="{{ url_for('model_versions') }}">返回模型版本</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

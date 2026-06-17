@@ -1,0 +1,9 @@
+{
+  "model": "LightAMFormer",
+  "top_k": null,
+  "pos_weight_scale": 1.1,
+  "embed_dim": 64,
+  "auc_mean": 0.897205929602588,
+  "auc_std": 0.030521739994661193,
+  "threshold_mean": 0.10000000000000002
+}

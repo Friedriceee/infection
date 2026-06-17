@@ -1,0 +1,33 @@
+@startuml
+title 图6.5 患者管理与详情页面原型结构图
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam ArrowColor #374151
+skinparam RectangleBorderColor #374151
+skinparam RectangleBackgroundColor #F8FAFC
+skinparam PackageBorderColor #64748B
+skinparam PackageBackgroundColor #F8FAFC
+
+rectangle "左侧导航栏" as nav
+rectangle "顶部用户信息栏" as top
+rectangle "患者列表页 /patients" {
+  [搜索：患者编号/姓名/风险等级]
+  [新增患者]
+  [Excel批量导入]
+  [患者表格：编号、姓名、性别、年龄、科室、病例数、最近检查、风险等级、操作]
+}
+rectangle "患者详情页 /patients/{id}" {
+  [患者基本信息卡片]
+  [病例时间轴]
+  [病例记录列表]
+  [历史预测记录]
+  [风险趋势图：病例数>=2时显示]
+  [核心指标趋势图：病例数>=2时显示]
+  [报告入口]
+}
+nav --> top
+top --> "患者列表页 /patients"
+"患者列表页 /patients" --> "患者详情页 /patients/{id}"
+@enduml

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>动态趋势残差融合模型结构示意图</title>
+<style>
+  body {
+    margin: 0;
+    background: #ffffff;
+    font-family: "SimHei", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+  }
+
+  .page {
+    width: 1600px;
+    height: 900px;
+    margin: 0 auto;
+    background: #fff;
+    position: relative;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .title {
+    font-size: 44px;
+    font-weight: 800;
+    fill: #000;
+  }
+
+  .section-blue {
+    font-size: 24px;
+    font-weight: 700;
+    fill: #1f5fbf;
+  }
+
+  .section-red {
+    font-size: 24px;
+    font-weight: 700;
+    fill: #e60000;
+  }
+
+  .node-text {
+    font-size: 20px;
+    font-weight: 600;
+    fill: #000;
+  }
+
+  .small-text {
+    font-size: 17px;
+    font-weight: 600;
+    fill: #000;
+  }
+
+  .formula-text {
+    font-size: 20px;
+    font-family: "Times New Roman", "SimSun", serif;
+    fill: #000;
+  }
+
+  .legend-text {
+    font-size: 15px;
+    font-weight: 600;
+    fill: #000;
+  }
+
+  .innovation-text {
+    font-size: 19px;
+    font-weight: 700;
+    fill: #e60000;
+  }
+
+  .innovation-black {
+    font-size: 19px;
+    font-weight: 700;
+    fill: #000;
+  }
+
+  .box {
+    stroke: #000;
+    stroke-width: 2.2;
+  }
+
+  .arrow {
+    stroke: #000;
+    stroke-width: 1.9;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    marker-end: url(#arrow);
+  }
+
+  .dash-arrow {
+    stroke: #000;
+    stroke-width: 1.7;
+    stroke-dasharray: 7 7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    marker-end: url(#arrow);
+  }
+
+  .dash-blue {
+    stroke: #2c5fbd;
+    stroke-width: 2.2;
+    stroke-dasharray: 8 8;
+    fill: none;
+  }
+
+  .dash-orange {
+    stroke: #ff8c00;
+    stroke-width: 2.2;
+    stroke-dasharray: 8 8;
+    fill: none;
+  }
+
+  .dash-red {
+    stroke: #ff0000;
+    stroke-width: 2;
+    stroke-dasharray: 6 6;
+    fill: none;
+  }
+
+  .dash-black {
+    stroke: #000;
+    stroke-width: 2.5;
+    stroke-dasharray: 9 9;
+    fill: none;
+  }
+</style>
+</head>
+
+<body>
+<div class="page">
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6.6" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#000"></path>
+    </marker>
+
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eaf4ff"/>
+      <stop offset="100%" stop-color="#b9d7f4"/>
+    </linearGradient>
+
+    <linearGradient id="yellowGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff9dc"/>
+      <stop offset="100%" stop-color="#f4e5a9"/>
+    </linearGradient>
+
+    <linearGradient id="purpleGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3eefc"/>
+      <stop offset="100%" stop-color="#d9cdef"/>
+    </linearGradient>
+
+    <linearGradient id="pinkGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff0f0"/>
+      <stop offset="100%" stop-color="#f6cfd2"/>
+    </linearGradient>
+
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8f5d8"/>
+      <stop offset="100%" stop-color="#badb9a"/>
+    </linearGradient>
+
+    <linearGradient id="orangeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff2e0"/>
+      <stop offset="100%" stop-color="#f2c18e"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#999" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Title -->
+  <text x="800" y="62" text-anchor="middle" class="title">动态趋势残差融合模型结构示意图</text>
+
+  <!-- Section labels -->
+  <text x="182" y="200" class="section-blue">静态分支</text>
+  <text x="182" y="526" class="section-red">动态分支</text>
+  <text x="500" y="170" class="section-blue">基础风险估计</text>
+
+  <!-- Patient data -->
+  <rect x="8" y="405" width="160" height="78" rx="10" fill="url(#pinkGrad)" class="box" filter="url(#shadow)"/>
+  <text x="88" y="452" text-anchor="middle" class="node-text">患者临床数据</text>
+
+  <!-- Static branch dashed bracket -->
+  <path d="M 292 196 Q 292 186 302 186 L 705 186 Q 715 186 715 196 L 715 224"
+        class="dash-blue"/>
+
+  <!-- Static nodes -->
+  <rect x="190" y="250" width="165" height="78" rx="9" fill="url(#blueGrad)" class="box" filter="url(#shadow)"/>
+  <text x="272" y="297" text-anchor="middle" class="node-text">静态临床特征</text>
+
+  <rect x="395" y="250" width="180" height="78" rx="9" fill="url(#blueGrad)" class="box" filter="url(#shadow)"/>
+  <text x="485" y="297" text-anchor="middle" class="node-text">PGA-AMFormer</text>
+
+  <rect x="615" y="250" width="155" height="78" rx="9" fill="url(#blueGrad)" class="box" filter="url(#shadow)"/>
+  <text x="692" y="286" text-anchor="middle" class="node-text">静态基础风险</text>
+  <text x="692" y="314" text-anchor="middle" class="formula-text">z<tspan baseline-shift="sub" font-size="15">static</tspan></text>
+
+  <!-- Dynamic branch nodes -->
+  <rect x="190" y="555" width="180" height="78" rx="9" fill="url(#yellowGrad)" class="box" filter="url(#shadow)"/>
+  <text x="280" y="583" text-anchor="middle" class="node-text">多时间点脑脊液</text>
+  <text x="280" y="611" text-anchor="middle" class="node-text">序列</text>
+
+
+  <rect x="405" y="555" width="180" height="78" rx="9" fill="url(#yellowGrad)" class="box" filter="url(#shadow)"/>
+  <text x="495" y="586" text-anchor="middle" class="small-text">Temporal Encoder</text>
+
+
+  <rect x="630" y="555" width="160" height="78" rx="9" fill="url(#yellowGrad)" class="box" filter="url(#shadow)"/>
+  <text x="710" y="586" text-anchor="middle" class="node-text">动态趋势表示</text>
+  <text x="710" y="616" text-anchor="middle" class="formula-text">h<tspan baseline-shift="sub" font-size="15">dyn</tspan></text>
+
+  <!-- Trend residual extraction dashed bracket -->
+  <path d="M 238 632 Q 238 660 268 660 L 762 660 Q 792 660 792 632"
+        class="dash-orange"/>
+  <text x="515" y="684" text-anchor="middle" fill="#e66a00" font-size="20" font-weight="700">趋势残差提取</text>
+
+  <!-- Innovation 1 -->
+  <rect x="282" y="682" width="178" height="72" rx="12" class="dash-red"/>
+  <text x="371" y="713" text-anchor="middle" class="innovation-text">创新点1：</text>
+  <text x="371" y="743" text-anchor="middle" class="innovation-black">短时序动态趋势建模</text>
+
+  <!-- Central dynamic residual fusion -->
+  <rect x="835" y="375" width="190" height="108" rx="11" fill="url(#purpleGrad)" class="box" filter="url(#shadow)"/>
+  <text x="930" y="413" text-anchor="middle" class="node-text">Dynamic</text>
+  <text x="930" y="452" text-anchor="middle" class="node-text">Residual Fusion</text>
+
+  <!-- Sigmoid classifier -->
+  <rect x="828" y="237" width="200" height="64" rx="10" fill="url(#pinkGrad)" class="box" filter="url(#shadow)"/>
+  <text x="928" y="276" text-anchor="middle" class="node-text">Sigmoid / 分类器</text>
+
+  <!-- Final prediction -->
+  <rect x="802" y="116" width="255" height="62" rx="10" fill="url(#pinkGrad)" class="box" filter="url(#shadow)"/>
+  <text x="930" y="154" text-anchor="middle" class="node-text">最终感染风险预测</text>
+
+  <!-- Formula box -->
+  <rect x="820" y="595" width="220" height="100" rx="8" fill="#ffffff" class="box" filter="url(#shadow)"/>
+  <text x="930" y="636" text-anchor="middle" class="formula-text">
+    z<tspan baseline-shift="sub" font-size="15">final</tspan> = 
+    z<tspan baseline-shift="sub" font-size="15">static</tspan> + α · r<tspan baseline-shift="sub" font-size="15">dyn</tspan>
+  </text>
+  <text x="930" y="672" text-anchor="middle" class="formula-text">
+    y = σ(z<tspan baseline-shift="sub" font-size="15">final</tspan>)
+  </text>
+
+  <!-- Innovation 2 -->
+  <rect x="992" y="492" width="120" height="88" rx="12" class="dash-red"/>
+  <text x="1052" y="522" text-anchor="middle" class="innovation-text">创新点2：</text>
+  <text x="1052" y="550" text-anchor="middle" class="innovation-black">动态残差修正</text>
+  <text x="1052" y="576" text-anchor="middle" class="innovation-black">静态风险</text>
+
+  <!-- Innovation 3 -->
+  <rect x="1040" y="190" width="115" height="105" rx="12" class="dash-red"/>
+  <text x="1098" y="220" text-anchor="middle" class="innovation-text">创新点3：</text>
+  <text x="1098" y="250" text-anchor="middle" class="innovation-black">静态—动态</text>
+  <text x="1098" y="278" text-anchor="middle" class="innovation-black">互补融合</text>
+
+  <!-- Right detail module dashed rectangle -->
+  <rect x="1192" y="98" width="377" height="617" rx="30" class="dash-black"/>
+  <text x="1380" y="136" text-anchor="middle" font-size="25" font-weight="800" fill="#000">动态残差模块细节</text>
+
+  <!-- Detail module nodes -->
+  <rect x="1325" y="158" width="92" height="50" rx="8" fill="url(#purpleGrad)" class="box" filter="url(#shadow)"/>
+  <text x="1371" y="190" text-anchor="middle" class="formula-text">y</text>
+
+  <rect x="1245" y="240" width="250" height="84" rx="9" fill="url(#greenGrad)" class="box" filter="url(#shadow)"/>
+  <text x="1370" y="276" text-anchor="middle" class="formula-text">Weighted Fusion</text>
+  <text x="1370" y="307" text-anchor="middle" class="formula-text">y = α · x + β · F(x)</text>
+
+  <rect x="1252" y="354" width="74" height="38" rx="6" fill="url(#purpleGrad)" class="box" filter="url(#shadow)"/>
+  <text x="1289" y="380" text-anchor="middle" class="formula-text">α</text>
+
+  <rect x="1422" y="354" width="74" height="38" rx="6" fill="url(#purpleGrad)" class="box" filter="url(#shadow)"/>
+  <text x="1459" y="380" text-anchor="middle" class="formula-text">β</text>
+
+  <rect x="1242" y="415" width="255" height="70" rx="8" fill="url(#purpleGrad)" class="box" filter="url(#shadow)"/>
+  <text x="1369" y="444" text-anchor="middle" class="formula-text">GateNet</text>
+  <text x="1369" y="471" text-anchor="middle" class="formula-text">(Pool + FC + Sigmoid)</text>
+
+  <rect x="1245" y="510" width="250" height="54" rx="8" fill="url(#yellowGrad)" class="box" filter="url(#shadow)"/>
+  <text x="1370" y="544" text-anchor="middle" class="formula-text">Concat / Pool</text>
+
+  <rect x="1214" y="600" width="150" height="70" rx="8" fill="url(#blueGrad)" class="box" filter="url(#shadow)"/>
+  <text x="1289" y="630" text-anchor="middle" class="formula-text">Skip / Identity</text>
+  <text x="1289" y="658" text-anchor="middle" class="formula-text">z<tspan baseline-shift="sub" font-size="15">static</tspan></text>
+
+  <rect x="1384" y="600" width="150" height="70" rx="8" fill="url(#orangeGrad)" class="box" filter="url(#shadow)"/>
+  <text x="1459" y="630" text-anchor="middle" class="formula-text">Transform</text>
+  <text x="1459" y="658" text-anchor="middle" class="formula-text">r<tspan baseline-shift="sub" font-size="15">dyn</tspan></text>
+
+  <!-- Arrows left main: start from the right edge of patient data box, then branch outside the box -->
+  <path d="M 168 430 L 180 430 L 180 289 L 190 289" class="arrow"/>
+  <path d="M 168 458 L 180 458 L 180 594 L 190 594" class="arrow"/>
+
+  <line x1="355" y1="289" x2="395" y2="289" class="arrow"/>
+  <line x1="575" y1="289" x2="615" y2="289" class="arrow"/>
+
+  <path d="M 770 289 L 805 289 L 805 408 L 835 408" class="arrow"/>
+  <line x1="370" y1="594" x2="405" y2="594" class="arrow"/>
+  <line x1="585" y1="594" x2="630" y2="594" class="arrow"/>
+  <path d="M 790 594 L 805 594 L 805 452 L 835 452" class="arrow"/>
+
+  <line x1="930" y1="595" x2="930" y2="483" class="arrow"/>
+  <line x1="930" y1="375" x2="930" y2="301" class="arrow"/>
+  <line x1="930" y1="237" x2="930" y2="178" class="arrow"/>
+
+  <!-- Dashed arrows from central fusion to detail module -->
+  <path d="M 1025 408 L 1180 280" class="dash-arrow"/>
+  <path d="M 1025 452 L 1180 610" class="dash-arrow"/>
+
+  <!-- Detail module arrows -->
+  <line x1="1371" y1="240" x2="1371" y2="208" class="arrow"/>
+  <line x1="1289" y1="415" x2="1289" y2="392" class="arrow"/>
+  <line x1="1459" y1="415" x2="1459" y2="392" class="arrow"/>
+  <path d="M 1289 354 L 1289 324" class="arrow"/>
+  <path d="M 1459 354 L 1459 324" class="arrow"/>
+  <line x1="1370" y1="510" x2="1370" y2="485" class="arrow"/>
+  <path d="M 1289 600 L 1289 565" class="arrow"/>
+  <path d="M 1459 600 L 1459 565" class="arrow"/>
+
+  <!-- Legend box -->
+  <rect x="35" y="780" width="1530" height="68" rx="10" fill="#ffffff" stroke="#000" stroke-width="1.8"/>
+
+  <rect x="168" y="790" width="60" height="48" rx="5" fill="url(#blueGrad)" class="box"/>
+  <text x="264" y="819" class="legend-text">静态分支</text>
+
+  <rect x="393" y="790" width="60" height="48" rx="5" fill="url(#yellowGrad)" class="box"/>
+  <text x="481" y="819" class="legend-text">动态分支</text>
+
+  <rect x="608" y="790" width="60" height="48" rx="5" fill="url(#purpleGrad)" class="box"/>
+  <text x="698" y="819" class="legend-text">残差融合</text>
+
+  <rect x="803" y="790" width="60" height="48" rx="5" fill="url(#pinkGrad)" class="box"/>
+  <text x="893" y="819" class="legend-text">输出与预测</text>
+
+  <rect x="1011" y="790" width="60" height="48" rx="5" fill="url(#greenGrad)" class="box"/>
+  <text x="1101" y="819" class="legend-text">GateNet</text>
+
+  <rect x="1247" y="790" width="60" height="48" rx="5" fill="url(#purpleGrad)" class="box"/>
+  <text x="1335" y="819" class="legend-text">α, β</text>
+
+
+</svg>
+</div>
+</body>
+</html>

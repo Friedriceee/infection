@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>PGA-AMFormer 静态模型结构示意图</title>
+<style>
+  body {
+    margin: 0;
+    background: #fff;
+    font-family: "SimHei", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+  }
+  .page {
+    width: 1600px;
+    height: 900px;
+    margin: 0 auto;
+    position: relative;
+    background: #fff;
+  }
+  svg { width: 100%; height: 100%; }
+  .title { font-size: 44px; font-weight: 800; fill: #000; }
+  .section-title { font-size: 24px; font-weight: 700; fill: #000; }
+  .node-text { font-size: 20px; font-weight: 600; fill: #000; }
+  .mid-text { font-size: 20px; font-weight: 600; fill: #000; }
+  .small-text { font-size: 17px; font-weight: 600; fill: #000; }
+  .legend-text { font-size: 15px; font-weight: 600; fill: #000; }
+  .innovation-text { font-size: 19px; font-weight: 700; fill: #e60000; }
+  .innovation-black { font-size: 19px; font-weight: 700; fill: #000; }
+  .box { stroke: #000; stroke-width: 2.2; }
+  .dash-black { stroke: #000; stroke-width: 2.5; stroke-dasharray: 9 9; fill: none; }
+  
+  .dash-box-red { stroke: #e60000; stroke-width: 2.5; stroke-dasharray: 6 6; fill: #fff; }
+  .dash-box-orange { stroke: #ff8c00; stroke-width: 2.5; stroke-dasharray: 6 6; fill: #fff; }
+  
+  .panel-dash { stroke: #8c8c8c; stroke-width: 1.5; stroke-dasharray: 5 5; fill: #fff; }
+  .arrow {
+    stroke: #000;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    marker-end: url(#arrow);
+  }
+  .guide-arrow {
+    stroke: #000;
+    stroke-width: 1.8;
+    stroke-dasharray: 6 6;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    marker-end: url(#arrow);
+  }
+  .dash-arrow {
+    stroke: #000;
+    stroke-width: 1.8;
+    stroke-dasharray: 6 6;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    marker-end: url(#arrow);
+  }
+  .green-link {
+    stroke: #8fcf4f;
+    stroke-width: 3;
+    stroke-dasharray: 7 6;
+    fill: none;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6.6" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#000"></path>
+    </marker>
+    <marker id="grey-arrow" markerWidth="8" markerHeight="8" refX="6.6" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"></path>
+    </marker>
+    <linearGradient id="pinkGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff3f5"/><stop offset="100%" stop-color="#f7dce2"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8f3ff"/><stop offset="100%" stop-color="#bfdcf8"/>
+    </linearGradient>
+    <linearGradient id="yellowGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff9d8"/><stop offset="100%" stop-color="#f4e6a7"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ecf7de"/><stop offset="100%" stop-color="#cfe7ac"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4eefc"/><stop offset="100%" stop-color="#ddd0f0"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff0de"/><stop offset="100%" stop-color="#f6d4a9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 顶部标题 -->
+  <text x="800" y="56" text-anchor="middle" class="title">PGA-AMFormer 静态模型结构示意图</text>
+
+  <!-- 左侧模块：L x PGA-AMFormer Block -->
+  <text x="245" y="92" text-anchor="middle" class="section-title">预测值输出</text>
+  <line x1="245" y1="126" x2="245" y2="94" class="arrow"/>
+  <rect x="35" y="100" width="410" height="600" rx="40" fill="#fff" class="box"/>
+  <text x="240" y="145" text-anchor="middle" class="node-text">L × PGA-AMFormer Block</text>
+
+  <rect x="145" y="165" width="190" height="52" rx="10" fill="url(#yellowGrad)" class="box"/>
+  <text x="240" y="200" text-anchor="middle" class="mid-text">Add</text>
+
+  <rect x="145" y="238" width="190" height="52" rx="10" fill="url(#blueGrad)" class="box"/>
+  <text x="240" y="273" text-anchor="middle" class="mid-text">Feed Forward</text>
+
+  <rect x="145" y="311" width="190" height="52" rx="10" fill="url(#yellowGrad)" class="box"/>
+  <text x="240" y="346" text-anchor="middle" class="mid-text">Add</text>
+
+  <!-- Prior-Guided Arithmetic Block -->
+  <rect x="132" y="385" width="216" height="95" rx="16" fill="url(#orangeGrad)" stroke="#ff3b30" stroke-width="4.5"/>
+  <text x="240" y="425" text-anchor="middle" class="node-text">Prior-Guided</text>
+  <text x="240" y="455" text-anchor="middle" class="node-text">Arithmetic Block</text>
+
+  <!-- 左侧残差连接：从 Prior-Guided 左边缘出发，向左再向上分支到两个 Add -->
+  <path d="M 132 430 L 110 430 L 110 185 L 145 185" class="arrow"/>
+  <path d="M 110 332 L 145 332" class="arrow"/>
+
+  <line x1="240" y1="311" x2="240" y2="290" class="arrow"/>
+  <line x1="240" y1="238" x2="240" y2="217" class="arrow"/>
+
+  <circle cx="240" cy="548" r="21" fill="#fff" class="box"/>
+  <text x="240" y="558" text-anchor="middle" font-size="26" font-weight="800">C</text>
+  <line x1="240" y1="527" x2="240" y2="480" class="arrow"/>
+
+  <!-- 底部输入层 -->
+  <rect x="60" y="590" width="145" height="66" rx="10" fill="url(#pinkGrad)" class="box"/>
+  <text x="132" y="621" text-anchor="middle" class="mid-text">查找表 /</text>
+  <text x="132" y="649" text-anchor="middle" class="mid-text">Embedding</text>
+  <rect x="275" y="590" width="145" height="66" rx="10" fill="url(#pinkGrad)" class="box"/>
+  <text x="347" y="631" text-anchor="middle" class="node-text">FC层</text>
+
+  <line x1="132" y1="590" x2="221" y2="548" class="arrow"/>
+  <line x1="347" y1="590" x2="259" y2="548" class="arrow"/>
+  <text x="132" y="688" text-anchor="middle" class="small-text">类别型输入</text>
+  <text x="347" y="688" text-anchor="middle" class="small-text">数值型输入</text>
+
+  <!-- 创新点2 引出框（无虚线箭头） -->
+  <rect x="375" y="385" width="155" height="95" rx="16" class="dash-box-red"/>
+  <text x="452" y="419" text-anchor="middle" class="innovation-text">创新点2：</text>
+  <text x="452" y="447" text-anchor="middle" class="innovation-black">先验引导交互</text>
+  <text x="452" y="470" text-anchor="middle" class="innovation-black">+算术特征建模</text>
+
+  <!-- 右侧模块整体虚线框 -->
+  <rect x="545" y="95" width="1005" height="650" rx="30" class="dash-black"/>
+  <text x="1048" y="130" text-anchor="middle" class="section-title">PGA 模块细节</text>
+
+  <!-- 右侧中心流程图 -->
+  <rect x="610" y="145" width="330" height="50" rx="10" fill="url(#purpleGrad)" class="box"/>
+  <text x="775" y="179" text-anchor="middle" class="node-text">Concat + Down-Dim FC</text>
+
+  <rect x="610" y="220" width="330" height="50" rx="10" fill="url(#pinkGrad)" class="box"/>
+  <text x="775" y="254" text-anchor="middle" class="node-text">Weighted Sum</text>
+
+  <rect x="610" y="295" width="330" height="50" rx="10" fill="url(#yellowGrad)" class="box"/>
+  <text x="775" y="329" text-anchor="middle" class="node-text">Prior Gate / 权重生成</text>
+
+  <rect x="610" y="370" width="330" height="50" rx="10" fill="url(#orangeGrad)" class="box"/>
+  <text x="775" y="404" text-anchor="middle" class="node-text">Gather</text>
+
+  <rect x="610" y="445" width="330" height="50" rx="10" fill="url(#pinkGrad)" class="box"/>
+  <text x="775" y="479" text-anchor="middle" class="node-text">Top-k</text>
+
+  <rect x="610" y="520" width="330" height="50" rx="10" fill="url(#blueGrad)" class="box"/>
+  <text x="775" y="554" text-anchor="middle" class="node-text">MatMul @</text>
+
+  <!-- P, K, V 输入模块 -->
+  <rect x="575" y="602" width="150" height="72" rx="10" fill="url(#blueGrad)" class="box"/>
+  <text x="650" y="643" text-anchor="middle" class="node-text">临床先验对(P)</text>
+
+  <rect x="755" y="602" width="95" height="72" rx="10" fill="url(#greenGrad)" class="box"/>
+  <text x="802" y="643" text-anchor="middle" class="node-text">K</text>
+
+  <rect x="875" y="602" width="95" height="72" rx="10" fill="url(#greenGrad)" class="box"/>
+  <text x="922" y="643" text-anchor="middle" class="node-text">V</text>
+
+  <!-- P, K, V 到 MatMul 的箭头 -->
+  <line x1="650" y1="602" x2="712" y2="570" class="arrow"/>
+  <line x1="802" y1="602" x2="775" y2="570" class="arrow"/>
+  <line x1="922" y1="602" x2="838" y2="570" class="arrow"/>
+  
+  <!-- 中央主干向上的箭头 -->
+  <line x1="775" y1="520" x2="775" y2="495" class="arrow"/>
+  <line x1="775" y1="445" x2="775" y2="420" class="arrow"/>
+  <line x1="775" y1="370" x2="775" y2="345" class="arrow"/>
+  <line x1="775" y1="295" x2="775" y2="270" class="arrow"/>
+  <line x1="775" y1="220" x2="775" y2="195" class="arrow"/>
+
+  <!-- 创新点1 -->
+  <rect x="1000" y="145" width="150" height="110" rx="14" class="dash-box-red"/>
+  <text x="1075" y="180" text-anchor="middle" class="innovation-text">创新点1：</text>
+  <text x="1075" y="210" text-anchor="middle" class="innovation-black">临床先验引导</text>
+  <text x="1075" y="235" text-anchor="middle" class="innovation-black">候选交互生成</text>
+  <path d="M 1000 172 L 940 170" class="guide-arrow"/>
+  <path d="M 1000 228 L 940 245" class="guide-arrow"/>
+
+  <!-- 创新点3 -->
+  <rect x="1000" y="295" width="150" height="90" rx="14" class="dash-box-orange"/>
+  <text x="1075" y="327" text-anchor="middle" class="innovation-text">创新点3：</text>
+  <text x="1075" y="357" text-anchor="middle" class="innovation-black">自适应权重融合</text>
+  <path d="M 1000 320 L 940 320" class="guide-arrow"/>
+  <path d="M 1000 355 L 940 395" class="guide-arrow"/>
+
+  <!-- 中央主干反馈回路 -->
+  <path d="M 940 545 L 980 545 L 980 320 L 940 320" class="arrow"/>
+
+  <!-- 右侧可视化面板（无灰色虚线映射线） -->
+
+  <rect x="1190" y="160" width="340" height="430" rx="28" class="panel-dash"/>
+  <text x="1360" y="198" text-anchor="middle" class="mid-text">候选交互词元 (Gather)</text>
+
+  <g transform="translate(1235,212)">
+    <rect x="0" y="0" width="250" height="36" fill="#9bd45c" stroke="#000" stroke-width="1.8"/>
+    <g stroke="#000" stroke-width="1.8">
+      <line x1="25" y1="0" x2="25" y2="36"/><line x1="50" y1="0" x2="50" y2="36"/><line x1="75" y1="0" x2="75" y2="36"/>
+      <line x1="100" y1="0" x2="100" y2="36"/><line x1="125" y1="0" x2="125" y2="36"/><line x1="150" y1="0" x2="150" y2="36"/>
+      <line x1="175" y1="0" x2="175" y2="36"/><line x1="200" y1="0" x2="200" y2="36"/><line x1="225" y1="0" x2="225" y2="36"/>
+    </g>
+    <rect x="0" y="92" width="290" height="40" fill="#9bd45c" stroke="#000" stroke-width="1.8"/>
+    <g stroke="#000" stroke-width="1.8">
+      <line x1="20" y1="92" x2="20" y2="132"/><line x1="40" y1="92" x2="40" y2="132"/><line x1="60" y1="92" x2="60" y2="132"/>
+      <line x1="80" y1="92" x2="80" y2="132"/><line x1="100" y1="92" x2="100" y2="132"/><line x1="120" y1="92" x2="120" y2="132"/>
+      <line x1="140" y1="92" x2="140" y2="132"/><line x1="160" y1="92" x2="160" y2="132"/><line x1="180" y1="92" x2="180" y2="132"/>
+      <line x1="200" y1="92" x2="200" y2="132"/><line x1="220" y1="92" x2="220" y2="132"/><line x1="240" y1="92" x2="240" y2="132"/>
+      <line x1="260" y1="92" x2="260" y2="132"/><line x1="280" y1="92" x2="280" y2="132"/>
+    </g>
+    <path d="M 20 92 L 10 36 M 60 92 L 50 36 M 100 92 L 120 36 M 140 92 L 180 36 M 200 92 L 260 36" class="green-link"/>
+  </g>
+  <text x="1360" y="374" text-anchor="middle" class="mid-text">索引词元（由 Top-k 选择）</text>
+  <text x="1360" y="414" text-anchor="middle" class="mid-text">相似图（按相似度）</text>
+
+  <g transform="translate(1230,430)">
+    <rect x="0" y="0" width="250" height="120" fill="#6fa7ee" stroke="#000" stroke-width="1.8"/>
+    <g stroke="#000" stroke-width="1.5">
+      <line x1="25" y1="0" x2="25" y2="120"/><line x1="50" y1="0" x2="50" y2="120"/><line x1="75" y1="0" x2="75" y2="120"/>
+      <line x1="100" y1="0" x2="100" y2="120"/><line x1="125" y1="0" x2="125" y2="120"/><line x1="150" y1="0" x2="150" y2="120"/>
+      <line x1="175" y1="0" x2="175" y2="120"/><line x1="200" y1="0" x2="200" y2="120"/><line x1="225" y1="0" x2="225" y2="120"/>
+      <line x1="0" y1="20" x2="250" y2="20"/><line x1="0" y1="40" x2="250" y2="40"/><line x1="0" y1="60" x2="250" y2="60"/>
+      <line x1="0" y1="80" x2="250" y2="80"/><line x1="0" y1="100" x2="250" y2="100"/>
+    </g>
+    <!-- 红色的Top-K词元 -->
+    <rect x="25" y="20" width="25" height="20" fill="#ef1b2d"/>
+    <rect x="100" y="40" width="25" height="20" fill="#ef1b2d"/>
+    <rect x="175" y="60" width="25" height="20" fill="#ef1b2d"/>
+    <rect x="50" y="80" width="25" height="20" fill="#ef1b2d"/>
+    <rect x="200" y="20" width="25" height="20" fill="#ef1b2d"/>
+  </g>
+
+  <!-- 右侧面板图例 -->
+  <g transform="translate(1230,560)">
+    <rect x="0" y="0" width="20" height="16" fill="#6fa7ee" stroke="#000" stroke-width="1.5"/>
+    <text x="26" y="14" class="legend-text">相似图</text>
+    <rect x="100" y="0" width="16" height="16" fill="#ef1b2d" stroke="#000" stroke-width="1.5"/>
+    <text x="122" y="14" class="legend-text">Top-K词元</text>
+  </g>
+
+  <!-- 底部图例面板 -->
+  <rect x="30" y="770" width="1540" height="90" rx="16" fill="#fff" class="box"/>
+
+  <rect x="45" y="800" width="55" height="42" rx="8" fill="url(#blueGrad)" class="box"/>
+  <text x="68" y="828" text-anchor="middle" class="node-text">P</text>
+  <text x="114" y="829" class="legend-text">临床先验对</text>
+
+  <rect x="255" y="800" width="55" height="42" rx="8" fill="url(#greenGrad)" class="box"/>
+  <text x="282" y="828" text-anchor="middle" class="node-text">K</text>
+  <text x="322" y="829" class="legend-text">键(Key)</text>
+
+  <rect x="420" y="800" width="55" height="42" rx="8" fill="url(#greenGrad)" class="box"/>
+  <text x="447" y="828" text-anchor="middle" class="node-text">V</text>
+  <text x="487" y="829" class="legend-text">值(Value)</text>
+
+  <rect x="560" y="800" width="55" height="42" rx="8" fill="url(#blueGrad)" class="box"/>
+  <text x="588" y="828" text-anchor="middle" class="node-text">@</text>
+  <text x="628" y="829" class="legend-text">矩阵乘法</text>
+
+  <circle cx="760" cy="821" r="21" fill="#fff" class="box"/>
+  <text x="760" y="829" text-anchor="middle" font-size="22" font-weight="800">C</text>
+  <text x="796" y="829" class="legend-text">拼接</text>
+
+  <rect x="895" y="800" width="55" height="42" fill="#6fa7ee" stroke="#000" stroke-width="1.8"/>
+  <text x="970" y="829" class="legend-text">相似图(矩阵)</text>
+
+  <rect x="1108" y="804" width="20" height="20" fill="#ef1b2d" stroke="#000" stroke-width="1.5"/>
+  <text x="1140" y="822" class="legend-text">Top-K词元</text>
+
+  <rect x="1260" y="796" width="72" height="50" rx="12" fill="url(#greenGrad)" class="box"/>
+  <text x="1296" y="829" text-anchor="middle" class="node-text">PGA</text>
+  <text x="1342" y="829" class="legend-text">Prior-Guided Arithmetic</text>
+</svg>
+</div>
+</body>
+</html>

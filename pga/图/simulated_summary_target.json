@@ -1,0 +1,179 @@
+{
+  "data_type": "simulated_for_plotting_only",
+  "note": "Simulated plotting data only; not real experimental results. Full model targets updated by user request.",
+  "target_table_source": "User-provided ablation targets in current chat.",
+  "accuracy": {
+    "mean": 0.8342,
+    "std": 0.0158
+  },
+  "precision": {
+    "mean": 0.6431,
+    "std": 0.0199
+  },
+  "recall": {
+    "mean": 0.9606,
+    "std": 0.0149
+  },
+  "f1": {
+    "mean": 0.7704,
+    "std": 0.0115
+  },
+  "auc": {
+    "mean": 0.9217,
+    "std": 0.0132
+  },
+  "mcc": {
+    "mean": 0.6805,
+    "std": 0.0287
+  },
+  "ap": {
+    "mean": 0.8607,
+    "std": 0.0184
+  },
+  "by_model": {
+    "原始 AMFormer": {
+      "accuracy": {
+        "mean": 0.86161,
+        "std": 0.008726113825753112
+      },
+      "precision": {
+        "mean": 0.497,
+        "std": 0.033561976252896655
+      },
+      "recall": {
+        "mean": 0.943,
+        "std": 0.02237465083526445
+      },
+      "f1": {
+        "mean": 0.649,
+        "std": 0.026103759307808533
+      },
+      "auc": {
+        "mean": 0.893,
+        "std": 0.01342479050115867
+      },
+      "mcc": {
+        "mean": 0.30316,
+        "std": 0.05381849347575611
+      },
+      "ap": {
+        "mean": 0.8100000000000002,
+        "std": 0.014916433890176311
+      }
+    },
+    "+PGA-Attention": {
+      "accuracy": {
+        "mean": 0.87486,
+        "std": 0.008726113825753133
+      },
+      "precision": {
+        "mean": 0.6119999999999999,
+        "std": 0.033561976252896676
+      },
+      "recall": {
+        "mean": 0.9110000000000001,
+        "std": 0.022374650835264447
+      },
+      "f1": {
+        "mean": 0.7309999999999999,
+        "std": 0.026103759307808533
+      },
+      "auc": {
+        "mean": 0.9019999999999999,
+        "std": 0.01342479050115867
+      },
+      "mcc": {
+        "mean": 0.46823999999999993,
+        "std": 0.05381849347575609
+      },
+      "ap": {
+        "mean": 0.826,
+        "std": 0.014916433890176311
+      }
+    },
+    "+PGA-Arithmetic": {
+      "accuracy": {
+        "mean": 0.87106,
+        "std": 0.008726113825753133
+      },
+      "precision": {
+        "mean": 0.587,
+        "std": 0.033561976252896676
+      },
+      "recall": {
+        "mean": 0.924,
+        "std": 0.02237465083526445
+      },
+      "f1": {
+        "mean": 0.718,
+        "std": 0.026103759307808533
+      },
+      "auc": {
+        "mean": 0.898,
+        "std": 0.01342479050115867
+      },
+      "mcc": {
+        "mean": 0.44175999999999993,
+        "std": 0.053818493475756124
+      },
+      "ap": {
+        "mean": 0.82,
+        "std": 0.014916433890176311
+      }
+    },
+    "完整 PGA-AMFormer": {
+      "accuracy": {
+        "mean": 0.8342,
+        "std": 0.0158
+      },
+      "precision": {
+        "mean": 0.6431,
+        "std": 0.0199
+      },
+      "recall": {
+        "mean": 0.9606,
+        "std": 0.0149
+      },
+      "f1": {
+        "mean": 0.7704,
+        "std": 0.0115
+      },
+      "auc": {
+        "mean": 0.9217,
+        "std": 0.0132
+      },
+      "mcc": {
+        "mean": 0.6805,
+        "std": 0.0287
+      },
+      "ap": {
+        "mean": 0.8607,
+        "std": 0.0184
+      }
+    }
+  },
+  "confusion_matrix_assumption": {
+    "positive": 265,
+    "negative": 650,
+    "continuous_tp": 254.559,
+    "continuous_fn": 10.441000000000003,
+    "continuous_fp": 141.27213046182553,
+    "continuous_tn": 508.72786953817445,
+    "mcc_from_target_metrics": 0.6804716952282289
+  },
+  "prediction_file_actual_full_model": {
+    "accuracy": 0.83388,
+    "precision": 0.642317,
+    "recall": 0.962264,
+    "f1": 0.770393,
+    "mcc": 0.680734,
+    "auc": 0.921718,
+    "ap": 0.860654,
+    "confusion_matrix": {
+      "tn": 508,
+      "fp": 142,
+      "fn": 10,
+      "tp": 255
+    }
+  }
+}

@@ -1,0 +1,2 @@
+﻿model_version,auc,precision,recall,f1,ap,mcc,accuracy,note
+完整 PGA-AMFormer,0.9217,0.6431,0.9606,0.7704,0.8607,0.6805,0.8342,"MCC computed from target Precision/Recall under current simulated prevalence P=265,N=650."

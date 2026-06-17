@@ -1,0 +1,19 @@
+{
+  "name": "ft_05",
+  "d_token": 32,
+  "n_heads": 4,
+  "n_layers": 2,
+  "dropout": 0.3,
+  "lr": 0.0005,
+  "weight_decay": 0.001,
+  "batch_size": 128,
+  "max_epochs": 50,
+  "patience": 8,
+  "best_epoch": 50,
+  "best_val_auc": 0.864172335600907,
+  "test_accuracy": 0.7486338797814208,
+  "test_precision": 0.5421686746987951,
+  "test_recall": 0.8490566037735849,
+  "test_f1": 0.6617647058823529,
+  "test_auc": 0.8589259796806966
+}

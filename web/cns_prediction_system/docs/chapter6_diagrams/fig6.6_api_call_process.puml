@@ -1,0 +1,49 @@
+@startuml
+title 图6.6 系统接口调用流程图
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam ArrowColor #374151
+skinparam RectangleBorderColor #374151
+skinparam RectangleBackgroundColor #F8FAFC
+skinparam PackageBorderColor #64748B
+skinparam PackageBackgroundColor #F8FAFC
+
+actor 临床医生 as doctor
+participant "Web前端\nJinja页面" as web
+participant "Flask路由" as flask
+participant "业务服务层" as service
+database "SQLite数据库" as db
+participant "real_model.py" as adapter
+participant "PGA-AMFormer\n静态模型" as static_model
+participant "D-PGA-AMFormer\n动态模型" as dynamic_model
+
+doctor -> web : 登录/录入患者/上传Excel
+web -> flask : POST /login 或 /patients/new 或 /patients/import
+flask -> service : 校验字段、解析Excel
+service -> db : 写入users/patients/cases/logs
+db --> service : 返回主键
+service --> web : 渲染页面
+
+doctor -> web : 录入病例
+web -> flask : POST /cases/new?patient_id=...
+flask -> service : 保存病例并触发预测
+service -> db : INSERT cases
+service -> adapter : predict_static(case_data)
+adapter -> static_model : 特征预处理 + 推理
+static_model --> adapter : 静态风险概率
+adapter --> service : 风险概率/等级/提示
+service -> db : INSERT predictions(static)
+service -> db : 查询患者病例数
+alt 病例数 >= 2
+  service -> adapter : predict_dynamic(case_list, latest_static_score)
+  adapter -> dynamic_model : 时序特征 + 静态风险融合
+  dynamic_model --> adapter : 动态修正量/融合风险
+  adapter --> service : 动态风险结果
+  service -> db : INSERT predictions(dynamic)
+end
+service -> db : UPDATE patients.current_risk
+service --> web : 患者详情/报告/趋势图数据
+web --> doctor : 展示预测结果与辅助决策报告
+@enduml

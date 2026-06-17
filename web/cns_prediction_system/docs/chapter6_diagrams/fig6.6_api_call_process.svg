@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1850" height="1600" viewBox="0 0 1850 1600">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="925.0" y="54" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="34" font-weight="700" fill="#111827">系统接口调用流程图</text>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+<rect x="15" y="105" width="170" height="64" rx="6" fill="#f3f4f6" stroke="#94a3b8" stroke-width="2"/>
+<text x="100.0" y="145.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#111827">临床医生</text>
+<line x1="100" y1="170" x2="100" y2="1515" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="275" y="105" width="170" height="64" rx="6" fill="#f3f4f6" stroke="#94a3b8" stroke-width="2"/>
+<text x="360.0" y="132.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#111827">Web前端</text>
+<text x="360.0" y="158.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#111827">Jinja页面</text>
+<line x1="360" y1="170" x2="360" y2="1515" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="535" y="105" width="170" height="64" rx="6" fill="#f3f4f6" stroke="#94a3b8" stroke-width="2"/>
+<text x="620.0" y="145.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#111827">Flask路由</text>
+<line x1="620" y1="170" x2="620" y2="1515" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="795" y="105" width="170" height="64" rx="6" fill="#f3f4f6" stroke="#94a3b8" stroke-width="2"/>
+<text x="880.0" y="145.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#111827">业务服务层</text>
+<line x1="880" y1="170" x2="880" y2="1515" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="1055" y="105" width="170" height="64" rx="6" fill="#f3f4f6" stroke="#94a3b8" stroke-width="2"/>
+<text x="1140.0" y="145.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#111827">SQLite数据库</text>
+<line x1="1140" y1="170" x2="1140" y2="1515" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="1315" y="105" width="170" height="64" rx="6" fill="#f3f4f6" stroke="#94a3b8" stroke-width="2"/>
+<text x="1400.0" y="145.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#111827">real_model.py</text>
+<line x1="1400" y1="170" x2="1400" y2="1515" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="1575" y="105" width="170" height="64" rx="6" fill="#f3f4f6" stroke="#94a3b8" stroke-width="2"/>
+<text x="1660.0" y="145.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="700" fill="#111827">静态/动态模型</text>
+<line x1="1660" y1="170" x2="1660" y2="1515" stroke="#94a3b8" stroke-width="2" stroke-dasharray="10 8"/>
+<rect x="55" y="170" width="1740" height="40" rx="0" fill="#f8fafc" stroke="#111827" stroke-width="2"/>
+<text x="925" y="197" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="21" font-weight="700" fill="#111827">患者信息管理与批量导入</text>
+<rect x="55" y="620" width="1740" height="40" rx="0" fill="#f8fafc" stroke="#111827" stroke-width="2"/>
+<text x="925" y="647" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="21" font-weight="700" fill="#111827">病例录入与静态预测</text>
+<rect x="55" y="1090" width="1740" height="40" rx="0" fill="#f8fafc" stroke="#111827" stroke-width="2"/>
+<text x="925" y="1117" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="21" font-weight="700" fill="#111827">动态趋势预测与结果展示</text>
+<line x1="100" y1="240" x2="360" y2="240" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="230.0" y="226" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">登录/录入患者/上传Excel</text>
+<line x1="360" y1="310" x2="620" y2="310" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="490.0" y="296" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">POST /login /patients/new /patients/import</text>
+<line x1="620" y1="380" x2="880" y2="380" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="750.0" y="366" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">字段校验、Excel解析、权限校验</text>
+<line x1="880" y1="450" x2="1140" y2="450" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1010.0" y="436" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">写入 patients / cases / operation_logs</text>
+<line x1="1140" y1="520" x2="880" y2="520" stroke="#374151" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<text x="1010.0" y="506" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">返回主键</text>
+<line x1="880" y1="590" x2="360" y2="590" stroke="#374151" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<text x="620.0" y="576" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">渲染患者列表/详情</text>
+<line x1="100" y1="700" x2="360" y2="700" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="230.0" y="686" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">录入单次检测病例</text>
+<line x1="360" y1="770" x2="620" y2="770" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="490.0" y="756" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">POST /cases/new?patient_id=...</text>
+<line x1="620" y1="840" x2="880" y2="840" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="750.0" y="826" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">保存病例并自动触发预测</text>
+<line x1="880" y1="910" x2="1140" y2="910" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1010.0" y="896" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">INSERT cases</text>
+<line x1="880" y1="980" x2="1400" y2="980" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1140.0" y="966" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">predict_static(case_data)</text>
+<line x1="1400" y1="1050" x2="1660" y2="1050" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1530.0" y="1036" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">特征预处理 + 静态推理</text>
+<line x1="1660" y1="1120" x2="1400" y2="1120" stroke="#374151" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<text x="1530.0" y="1106" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">静态风险概率</text>
+<line x1="1400" y1="1190" x2="880" y2="1190" stroke="#374151" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<text x="1140.0" y="1176" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">风险等级/关键因素/临床提示</text>
+<line x1="880" y1="1260" x2="1140" y2="1260" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1010.0" y="1246" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">INSERT predictions(static)</text>
+<line x1="880" y1="1170" x2="1140" y2="1170" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1010.0" y="1156" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">查询患者病例数</text>
+<rect x="720" y="1225" width="320" height="72" rx="8" fill="#fff7ed" stroke="#94a3b8" stroke-width="2"/>
+<text x="880.0" y="1269.0" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="21" font-weight="700" fill="#111827">病例数 &gt;= 2 ?</text>
+<line x1="880" y1="1340" x2="1400" y2="1340" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1140.0" y="1326" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">predict_dynamic(case_list, static_score)</text>
+<line x1="1400" y1="1410" x2="1660" y2="1410" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1530.0" y="1396" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">时序特征 + 静态风险融合</text>
+<line x1="1660" y1="1480" x2="1400" y2="1480" stroke="#374151" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<text x="1530.0" y="1466" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">动态修正量/融合风险</text>
+<line x1="1400" y1="1550" x2="880" y2="1550" stroke="#374151" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<text x="1140.0" y="1536" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">动态预测结果</text>
+<line x1="880" y1="1620" x2="1140" y2="1620" stroke="#374151" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1010.0" y="1606" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">INSERT predictions(dynamic) / UPDATE patients</text>
+<line x1="880" y1="1690" x2="360" y2="1690" stroke="#374151" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<text x="620.0" y="1676" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">患者详情、趋势图、报告数据</text>
+<line x1="360" y1="1760" x2="100" y2="1760" stroke="#374151" stroke-width="3" stroke-dasharray="10 8" marker-end="url(#arrow)"/>
+<text x="230.0" y="1746" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, Arial" font-size="18" font-weight="500" fill="#111827">展示预测结果与辅助决策报告</text>
+</svg>

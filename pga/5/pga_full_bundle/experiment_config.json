@@ -1,0 +1,51 @@
+{
+  "cfg": {
+    "data_path": "original.xlsx",
+    "output_dir": "three_experiments_light_anchor_results",
+    "label_col": "outcome",
+    "dynamic_data_path": "dynamic_curves.csv",
+    "static_id_col": "ID",
+    "dyn_id_col": "patient_id",
+    "dyn_cols": [
+      "C_G",
+      "C_WBC",
+      "C_RBC",
+      "C_P",
+      "C_N"
+    ],
+    "n_time_points": 4,
+    "batch_size": 32,
+    "epochs": 120,
+    "lr": 0.0003,
+    "min_lr": 1e-05,
+    "patience": 25,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "dynamic_epochs": 80,
+    "dynamic_lr": 0.0001,
+    "dynamic_patience": 18,
+    "dynamic_weight_decay": 0.001,
+    "fixed_threshold": 0.5,
+    "optimize_threshold": true,
+    "threshold_mode": "recall_f1",
+    "fn_cost": 3.0,
+    "fp_cost": 1.0,
+    "embed_dim": 64,
+    "n_heads": 4,
+    "n_layers": 2,
+    "top_k": null,
+    "dropout": 0.2,
+    "ff_mult": 4,
+    "pos_weight_scale": 1.1,
+    "seed": 42,
+    "n_splits": 5,
+    "num_workers": 0,
+    "device": "cpu"
+  },
+  "experiment": {
+    "name": "exp1_light_static_best",
+    "description": "LightAMFormer 原型；固定最佳参数；只用静态数据。",
+    "use_dae": false,
+    "use_dynamic_residual": false
+  }
+}

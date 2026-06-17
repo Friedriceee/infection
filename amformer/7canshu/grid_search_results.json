@@ -1,0 +1,14 @@
+[
+  {
+    "exp_name": "exp_01_topk_8_pw_0.9_emb_64",
+    "top_k": 8,
+    "pos_weight_scale": 0.9,
+    "embed_dim": 64,
+    "auc_mean": 0.8779368262444743,
+    "auc_std": 0.02069072575188644,
+    "f1_mean": 0.7066047819253052,
+    "recall_mean": 0.7612481857764877,
+    "precision_mean": 0.6596805656500399,
+    "accuracy_mean": 0.8174863387978142
+  }
+]

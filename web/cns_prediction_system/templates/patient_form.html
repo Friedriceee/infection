@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block page_title %}新增患者{% endblock %}
+{% block content %}
+<section class="card form-card">
+    <form method="post" class="form patient-form" data-validate="patient">
+        <div class="form-grid">
+            <label>患者编号 <input name="patient_no" value="{{ patient.patient_no or '' }}" required></label>
+            <label>姓名 <input name="name" value="{{ patient.name or '' }}" required></label>
+            <label>性别
+                <select name="sex" required>
+                    <option value="">请选择</option>
+                    <option value="男" {% if patient.sex == "男" %}selected{% endif %}>男</option>
+                    <option value="女" {% if patient.sex == "女" %}selected{% endif %}>女</option>
+                    <option value="未知" {% if patient.sex == "未知" %}selected{% endif %}>未知</option>
+                </select>
+            </label>
+            <label>年龄 <input name="age" type="number" min="0" max="120" value="{{ patient.age or '' }}" required></label>
+            <label>科室 <input name="department" value="{{ patient.department or '神经内科' }}"></label>
+            <label>住院号 <input name="inpatient_no" value="{{ patient.inpatient_no or '' }}"></label>
+            <label>门诊号 <input name="outpatient_no" value="{{ patient.outpatient_no or '' }}"></label>
+            <label>入院时间 <input name="admission_time" type="text" placeholder="YYYY-MM-DD HH:MM" value="{{ patient.admission_time or '' }}"></label>
+        </div>
+        <label>备注 <textarea name="remark" rows="4">{{ patient.remark or '' }}</textarea></label>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">保存患者</button>
+            <a class="btn" href="{{ url_for('patients') }}">返回列表</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

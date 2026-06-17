@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block page_title %}预测详情{% endblock %}
+{% block content %}
+<section class="card">
+    <div class="detail-header">
+        <div>
+            <h2>{{ prediction.patient_name }} <span>{{ prediction.patient_no }}</span></h2>
+            <p>{{ prediction.sex }} · {{ prediction.age }} 岁 · {{ prediction.patient_department or "未填写科室" }}</p>
+        </div>
+        <div class="risk-summary">
+            <span>{{ "静态预测" if prediction.prediction_type == "static" else "动态预测" }}</span>
+            <strong>{{ "%.0f"|format(prediction.risk_score * 100) }}%</strong>
+            <em class="risk-badge {{ risk_badge_class(prediction.risk_level) }}">{{ prediction.risk_level }}</em>
+        </div>
+    </div>
+    <div class="info-grid">
+        <div><span>模型名称</span>{{ prediction.model_name }}</div>
+        <div><span>模型版本</span>{{ prediction.model_version }}</div>
+        <div><span>静态风险</span>{{ "%.0f"|format((prediction.static_score or prediction.risk_score) * 100) }}%</div>
+        <div><span>动态融合风险</span>{{ "%.0f"|format((prediction.dynamic_score or prediction.risk_score) * 100) }}%</div>
+        <div><span>动态修正值</span>{{ prediction.dynamic_delta if prediction.dynamic_delta is not none else "-" }}</div>
+        <div><span>预测时间</span>{{ prediction.created_at }}</div>
+    </div>
+</section>
+
+<div class="two-col">
+    <section class="card">
+        <div class="card-title"><h2>关键影响指标</h2></div>
+        <ul class="factor-list">
+            {% for factor in result.key_factors or [] %}
+            <li>{{ factor }}</li>
+            {% else %}
+            <li>暂无关键影响指标</li>
+            {% endfor %}
+        </ul>
+    </section>
+    <section class="card">
+        <div class="card-title"><h2>临床提示</h2></div>
+        <p class="tip-text">{{ result.clinical_tip or result.trend_summary or "暂无临床提示" }}</p>
+        <div class="statement">本系统结果仅作为临床辅助参考，不能替代医生的临床诊断和治疗决策。</div>
+    </section>
+</div>
+
+<section class="card">
+    <div class="card-title"><h2>输入数据摘要</h2></div>
+    <div class="snapshot">
+        {% if input_snapshot is mapping %}
+            {% for key, value in input_snapshot.items() %}
+            <div><span>{{ key }}</span><strong>{{ value }}</strong></div>
+            {% endfor %}
+        {% else %}
+            <pre>{{ input_snapshot | tojson(indent=2) }}</pre>
+        {% endif %}
+    </div>
+    <div class="form-actions">
+        <a class="btn" href="{{ url_for('patient_detail', patient_id=prediction.patient_id) }}">返回患者详情</a>
+    </div>
+</section>
+{% endblock %}
+

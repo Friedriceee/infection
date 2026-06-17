@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block page_title %}新增账号{% endblock %}
+{% block content %}
+<section class="card form-card">
+    <form method="post" class="form">
+        <div class="form-grid">
+            <label>用户名 <input name="username" value="{{ user.username or '' }}" required></label>
+            <label>初始密码 <input name="password" type="password" required></label>
+            <label>角色
+                <select name="role">
+                    <option value="doctor" {% if user.role == "doctor" %}selected{% endif %}>医生</option>
+                    <option value="admin" {% if user.role == "admin" %}selected{% endif %}>管理员</option>
+                </select>
+            </label>
+            <label>真实姓名 <input name="real_name" value="{{ user.real_name or '' }}"></label>
+            <label>科室 <input name="department" value="{{ user.department or '' }}"></label>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">创建账号</button>
+            <a class="btn" href="{{ url_for('users') }}">返回账号管理</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
+

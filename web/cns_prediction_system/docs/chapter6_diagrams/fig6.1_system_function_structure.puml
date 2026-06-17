@@ -1,0 +1,49 @@
+@startuml
+title 图6.1 临床辅助决策原型系统功能结构图
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName "PingFang SC"
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam ArrowColor #374151
+skinparam RectangleBorderColor #374151
+skinparam RectangleBackgroundColor #F8FAFC
+skinparam PackageBorderColor #64748B
+skinparam PackageBackgroundColor #F8FAFC
+
+rectangle "中枢神经系统感染风险预测\n临床辅助决策系统" as system {
+  package "身份认证与首页" {
+    [医生/管理员登录]
+    [首页仪表盘]
+    [快捷入口]
+  }
+  package "患者信息管理" {
+    [新增患者]
+    [查询患者]
+    [编辑患者]
+    [Excel批量导入]
+  }
+  package "检测记录管理" {
+    [录入检测指标]
+    [多时间点病例]
+    [动态批量导入]
+    [病例详情]
+  }
+  package "风险预测服务" {
+    [静态PGA-AMFormer推理]
+    [动态D-PGA-AMFormer推理]
+    [缺失值容错预测]
+    [风险等级输出]
+  }
+  package "结果展示与报告" {
+    [历史预测记录]
+    [风险趋势图]
+    [核心指标趋势图]
+    [辅助决策报告打印]
+  }
+  package "系统管理" {
+    [账号管理]
+    [模型版本展示]
+    [操作日志审计]
+  }
+}
+@enduml

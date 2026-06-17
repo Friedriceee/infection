@@ -1,0 +1,7 @@
+{
+  "top_k": 8,
+  "pos_weight_scale": 0.9,
+  "embed_dim": 64,
+  "auc_mean": 0.8779368262444743,
+  "auc_std": 0.02069072575188644
+}

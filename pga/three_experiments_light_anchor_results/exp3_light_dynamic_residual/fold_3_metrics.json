@@ -1,0 +1,23 @@
+{
+  "fold": 3,
+  "auc": 0.9039187227866473,
+  "fixed_threshold": 0.5,
+  "best_threshold": 0.15000000000000002,
+  "accuracy_fixed": 0.8306010928961749,
+  "precision_fixed": 0.6833333333333333,
+  "recall_fixed": 0.7735849056603774,
+  "f1_fixed": 0.7256637168141593,
+  "mcc_fixed": 0.6062439863917356,
+  "accuracy": 0.8306010928961749,
+  "precision": 0.6527777777777778,
+  "recall": 0.8867924528301887,
+  "f1": 0.752,
+  "mcc": 0.6448290485775339,
+  "tn": 105,
+  "fp": 25,
+  "fn": 6,
+  "tp": 47,
+  "dynamic_train_coverage": 0.3579235076904297,
+  "dynamic_val_coverage": 0.37704917788505554,
+  "dynamic_scale_sigmoid": 0.017996665090322495
+}

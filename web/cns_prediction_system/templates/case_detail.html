@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block page_title %}病例详情{% endblock %}
+{% block content %}
+<section class="card">
+    <div class="detail-header">
+        <div>
+            <h2>{{ patient.name }} <span>{{ patient.patient_no }}</span></h2>
+            <p>检查时间：{{ case.visit_time }}</p>
+        </div>
+        <div class="action-row compact">
+            <a class="btn" href="{{ url_for('case_edit', case_id=case.id) }}">编辑病例</a>
+            <form method="post" action="{{ url_for('case_repredict', case_id=case.id) }}"><button class="btn btn-primary" type="submit">重新预测</button></form>
+            <form method="post" action="{{ url_for('case_delete', case_id=case.id) }}" data-confirm="确定删除该病例吗？关联预测记录将作废。"><button class="btn btn-danger" type="submit">删除病例</button></form>
+            <a class="btn" href="{{ url_for('patient_detail', patient_id=patient.id) }}">返回患者详情</a>
+        </div>
+    </div>
+    <div class="info-grid">
+        <div><span>体温</span>{{ case.temperature or "-" }}</div>
+        <div><span>GCS</span>{{ case.gcs or "-" }}</div>
+        <div><span>是否置管</span>{{ case.tube or "-" }}</div>
+        <div><span>感染部位</span>{{ case.site or "-" }}</div>
+        <div><span>其他感染</span>{{ case.other_inf or "-" }}</div>
+        <div><span>脑脊液透明度</span>{{ case.transparency or "-" }}</div>
+    </div>
+</section>
+
+<div class="two-col">
+    <section class="card">
+        <div class="card-title"><h2>血液指标</h2></div>
+        <div class="info-grid single">
+            {% for key, label in [("B_G","血糖"),("B_WBC","血白细胞"),("B_N","血中性粒细胞比例"),("B_Lym","血淋巴细胞比例"),("B_CRP","CRP"),("B_PCT","PCT"),("B_AC","乳酸"),("B_RBC","血红细胞")] %}
+            <div><span>{{ label }}</span>{{ case[key] or "-" }}</div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="card">
+        <div class="card-title"><h2>脑脊液指标</h2></div>
+        <div class="info-grid single">
+            {% for key, label in [("C_G","葡萄糖"),("C_WBC","白细胞"),("C_RBC","红细胞"),("C_P","蛋白"),("C_N","中性粒细胞比例")] %}
+            <div><span>{{ label }}</span>{{ case[key] or "-" }}</div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+<section class="card">
+    <div class="card-title"><h2>关联预测结果</h2></div>
+    <table>
+        <thead><tr><th>类型</th><th>风险概率</th><th>等级</th><th>模型</th><th>版本</th><th>详情</th></tr></thead>
+        <tbody>
+        {% for item in [static_prediction, dynamic_prediction] if item %}
+        <tr>
+            <td>{{ "静态预测" if item.prediction_type == "static" else "动态预测" }}</td>
+            <td>{{ "%.0f"|format(item.risk_score * 100) }}%</td>
+            <td><span class="risk-badge {{ risk_badge_class(item.risk_level) }}">{{ item.risk_level }}</span></td>
+            <td>{{ item.model_name }}</td>
+            <td>{{ item.model_version }}</td>
+            <td><a href="{{ url_for('prediction_detail', prediction_id=item.id) }}">查看</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="empty">暂无关联预测结果</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p class="muted">动态预测参与状态：{{ "已参与动态预测" if dynamic_prediction else "暂未参与动态预测" }}</p>
+</section>
+{% endblock %}

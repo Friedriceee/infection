@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block page_title %}系统管理{% endblock %}
+{% block content %}
+<div class="stats-grid admin-grid">
+    <a class="stat-card link-card" href="{{ url_for('users') }}"><span>权限管理</span><strong>账号</strong></a>
+    <a class="stat-card link-card" href="{{ url_for('model_versions') }}"><span>模型资产</span><strong>版本</strong></a>
+    <a class="stat-card link-card" href="{{ url_for('logs') }}"><span>操作审计</span><strong>日志</strong></a>
+</div>
+{% endblock %}

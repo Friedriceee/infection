@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block page_title %}操作日志{% endblock %}
+{% block content %}
+<section class="card">
+    <table>
+        <thead><tr><th>操作时间</th><th>操作用户</th><th>操作类型</th><th>IP 地址</th><th>操作描述</th></tr></thead>
+        <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.created_at }}</td>
+            <td>{{ log.real_name or log.username or "-" }}</td>
+            <td>{{ log.action }}</td>
+            <td>{{ log.ip_address or "-" }}</td>
+            <td>{{ log.description or "-" }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="empty">暂无操作日志</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

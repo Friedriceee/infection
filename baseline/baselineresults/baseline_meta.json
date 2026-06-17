@@ -1,0 +1,11 @@
+{
+  "seed": 42,
+  "threshold": 0.5,
+  "models": [
+    "logistic",
+    "decision_tree",
+    "random_forest",
+    "xgboost",
+    "gbdt"
+  ]
+}

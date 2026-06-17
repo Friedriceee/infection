@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block page_title %}患者列表{% endblock %}
+{% block content %}
+<section class="card">
+    <form class="toolbar" method="get">
+        <input name="keyword" value="{{ keyword }}" placeholder="患者编号或姓名">
+        <select name="risk_level">
+            <option value="">全部风险等级</option>
+            {% for level in ["低风险", "中风险", "高风险"] %}
+            <option value="{{ level }}" {% if selected_risk == level %}selected{% endif %}>{{ level }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn" type="submit">查询</button>
+        <a class="btn btn-primary" href="{{ url_for('patient_new') }}">新增患者</a>
+        <a class="btn" href="{{ url_for('patient_import') }}">导入 Excel/CSV</a>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>患者编号</th><th>姓名</th><th>性别</th><th>年龄</th><th>科室</th>
+                <th>病例记录数</th><th>最近检查时间</th><th>当前风险等级</th><th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for patient in patients %}
+        <tr>
+            <td>{{ patient.patient_no }}</td>
+            <td>{{ patient.name }}</td>
+            <td>{{ patient.sex }}</td>
+            <td>{{ patient.age }}</td>
+            <td>{{ patient.department or "-" }}</td>
+            <td>{{ patient.case_count }}</td>
+            <td>{{ patient.latest_visit_time or "-" }}</td>
+            <td><span class="risk-badge {{ risk_badge_class(patient.current_risk_level) }}">{{ patient.current_risk_level or "未预测" }}</span></td>
+            <td class="actions">
+                <a href="{{ url_for('patient_detail', patient_id=patient.id) }}">详情</a>
+                <a href="{{ url_for('case_new', patient_id=patient.id) }}">新增病例</a>
+                <a href="{{ url_for('report', patient_id=patient.id) }}">报告</a>
+                <form method="post" action="{{ url_for('patient_delete', patient_id=patient.id) }}" data-confirm="确定删除/标记出院该患者吗？相关病例和预测记录将一并作废。">
+                    <button class="link-button danger-text" type="submit">删除/出院</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="9" class="empty">暂无患者记录</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

@@ -1,0 +1,8 @@
+{
+  "train_size": 585,
+  "val_size": 147,
+  "test_size": 183,
+  "input_dim": 24,
+  "threshold": 0.5,
+  "seed": 42
+}

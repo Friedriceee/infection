@@ -1,0 +1,2 @@
+﻿exp_name,top_k,pos_weight_scale,embed_dim,auc_mean,auc_std,f1_mean,recall_mean,precision_mean,accuracy_mean
+exp_01_topk_8_pw_0.9_emb_64,8,0.9,64,0.8779368262444743,0.02069072575188644,0.7066047819253052,0.7612481857764877,0.6596805656500399,0.8174863387978142

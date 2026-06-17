@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block page_title %}{{ "编辑病例" if mode == "edit" else "新增病例" }}{% endblock %}
+{% block content %}
+<section class="card">
+    <div class="detail-header">
+        <div>
+            <h2>{{ patient.name }} <span>{{ patient.patient_no }}</span></h2>
+            <p>{{ patient.sex }} · {{ patient.age }} 岁 · {{ patient.department or "未填写科室" }}</p>
+        </div>
+        <a class="btn" href="{{ url_for('patient_detail', patient_id=patient.id) }}">返回患者详情</a>
+    </div>
+</section>
+
+<section class="card form-card">
+    <form method="post" class="form">
+        <input type="hidden" name="patient_id" value="{{ patient.id }}">
+        <h2>基础临床信息</h2>
+        <div class="form-grid">
+            <label>检查时间 <input name="visit_time" type="datetime-local" value="{{ case.get('visit_time', '') }}" required></label>
+            <label>体温 <input name="temperature" type="number" step="0.1" value="{{ case.get('temperature', '') }}"></label>
+            <label>GCS 评分 <input name="gcs" type="number" step="0.1" value="{{ case.get('gcs', '') }}"></label>
+            <label>是否置管
+                <select name="tube">
+                    {% for option in ["否", "是"] %}<option value="{{ option }}" {% if case.get('tube') == option %}selected{% endif %}>{{ option }}</option>{% endfor %}
+                </select>
+            </label>
+            <label>感染部位
+                <select name="site">
+                    {% for option in ["非枕叶", "枕叶"] %}<option value="{{ option }}" {% if case.get('site') == option %}selected{% endif %}>{{ option }}</option>{% endfor %}
+                </select>
+            </label>
+            <label>是否存在其他感染
+                <select name="other_inf">
+                    {% for option in ["否", "是"] %}<option value="{{ option }}" {% if case.get('other_inf') == option %}selected{% endif %}>{{ option }}</option>{% endfor %}
+                </select>
+            </label>
+            <label>脑脊液透明度
+                <select name="transparency">
+                    {% for option in ["清亮", "微浑", "浑浊", "血性"] %}<option value="{{ option }}" {% if case.get('transparency') == option %}selected{% endif %}>{{ option }}</option>{% endfor %}
+                </select>
+            </label>
+        </div>
+
+        <h2>血液指标</h2>
+        <div class="form-grid">
+            <label>血糖 B_G <input name="B_G" type="number" step="0.01" value="{{ case.get('B_G', '') }}"></label>
+            <label>血白细胞 B_WBC <input name="B_WBC" type="number" step="0.01" value="{{ case.get('B_WBC', '') }}"></label>
+            <label>血中性粒细胞比例 B_N <input name="B_N" type="number" step="0.01" value="{{ case.get('B_N', '') }}"></label>
+            <label>血淋巴细胞比例 B_Lym <input name="B_Lym" type="number" step="0.01" value="{{ case.get('B_Lym', '') }}"></label>
+            <label>CRP B_CRP <input name="B_CRP" type="number" step="0.01" value="{{ case.get('B_CRP', '') }}"></label>
+            <label>PCT B_PCT <input name="B_PCT" type="number" step="0.01" value="{{ case.get('B_PCT', '') }}"></label>
+            <label>乳酸 B_AC <input name="B_AC" type="number" step="0.01" value="{{ case.get('B_AC', '') }}"></label>
+            <label>血红细胞 B_RBC <input name="B_RBC" type="number" step="0.01" value="{{ case.get('B_RBC', '') }}"></label>
+        </div>
+
+        <h2>脑脊液指标</h2>
+        <div class="form-grid">
+            <label>脑脊液葡萄糖 C_G <input name="C_G" type="number" step="0.01" value="{{ case.get('C_G', '') }}"></label>
+            <label>脑脊液白细胞 C_WBC <input name="C_WBC" type="number" step="0.01" value="{{ case.get('C_WBC', '') }}"></label>
+            <label>脑脊液红细胞 C_RBC <input name="C_RBC" type="number" step="0.01" value="{{ case.get('C_RBC', '') }}"></label>
+            <label>脑脊液蛋白 C_P <input name="C_P" type="number" step="0.01" value="{{ case.get('C_P', '') }}"></label>
+            <label>脑脊液中性粒细胞比例 C_N <input name="C_N" type="number" step="0.01" value="{{ case.get('C_N', '') }}"></label>
+        </div>
+        <label>备注 <textarea name="remark" rows="4">{{ case.get('remark', '') }}</textarea></label>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">{{ "保存并重新预测" if mode == "edit" else "保存病例并自动预测" }}</button>
+            <a class="btn" href="{{ url_for('patient_detail', patient_id=patient.id) }}">取消</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

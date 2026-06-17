@@ -1,0 +1,10 @@
+{
+  "top_k": 12,
+  "pos_weight_scale": 0.9,
+  "embed_dim": 64,
+  "use_dae": true,
+  "use_pda": true,
+  "use_tte": true,
+  "auc_mean": 0.6611468108443479,
+  "auc_std": 0.039982436776955
+}

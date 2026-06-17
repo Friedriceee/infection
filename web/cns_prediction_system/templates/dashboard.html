@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block page_title %}首页{% endblock %}
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card"><span>总患者数</span><strong>{{ stats.patient_count }}</strong></div>
+    <div class="stat-card"><span>今日新增患者</span><strong>{{ stats.today_patient_count }}</strong></div>
+    <div class="stat-card danger"><span>高风险患者</span><strong>{{ stats.high_risk_count }}</strong></div>
+</div>
+
+<section class="card">
+    <div class="card-title"><h2>高风险患者列表</h2></div>
+    <table>
+        <thead><tr><th>患者编号</th><th>姓名</th><th>风险概率</th><th>风险等级</th><th>操作</th></tr></thead>
+        <tbody>
+        {% for patient in high_risk_patients %}
+        <tr>
+            <td>{{ patient.patient_no }}</td>
+            <td>{{ patient.name }}</td>
+            <td>{{ "%.0f"|format((patient.current_risk_score or 0) * 100) }}%</td>
+            <td><span class="risk-badge {{ risk_badge_class(patient.current_risk_level) }}">{{ patient.current_risk_level }}</span></td>
+            <td><a href="{{ url_for('patient_detail', patient_id=patient.id) }}">详情</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="empty">暂无高风险患者</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

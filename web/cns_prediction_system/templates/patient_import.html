@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block page_title %}批量导入患者与检测数据{% endblock %}
+{% block content %}
+<section class="card">
+    <div class="card-title"><h2>导入 Excel / CSV</h2></div>
+    <form method="post" enctype="multipart/form-data" class="form import-form">
+        <label>选择文件
+            <input name="file" type="file" accept=".xlsx,.csv" required>
+        </label>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">开始导入并自动预测</button>
+            <a class="btn" href="{{ url_for('patients') }}">返回患者列表</a>
+        </div>
+    </form>
+</section>
+
+{% if summary %}
+<section class="card">
+    <div class="card-title"><h2>导入结果</h2></div>
+    <div class="stats-grid import-stats">
+        <div class="stat-card"><span>新增患者</span><strong>{{ summary.patients_created }}</strong></div>
+        <div class="stat-card"><span>复用患者</span><strong>{{ summary.patients_reused }}</strong></div>
+        <div class="stat-card"><span>新增病例</span><strong>{{ summary.cases_created }}</strong></div>
+        <div class="stat-card"><span>跳过病例</span><strong>{{ summary.cases_skipped }}</strong></div>
+        <div class="stat-card"><span>静态预测</span><strong>{{ summary.static_predictions }}</strong></div>
+        <div class="stat-card"><span>动态预测</span><strong>{{ summary.dynamic_predictions }}</strong></div>
+    </div>
+</section>
+{% endif %}
+
+<section class="card">
+    <div class="card-title"><h2>字段映射说明</h2></div>
+    <table>
+        <thead><tr><th>原始字段</th><th>系统字段</th><th>说明</th></tr></thead>
+        <tbody>
+            <tr><td>ID</td><td>患者编号</td><td>已有患者会自动复用，未存在则创建新患者</td></tr>
+            <tr><td>sex</td><td>性别</td><td>0 映射为男，1 映射为女，其他或缺失映射为未知</td></tr>
+            <tr><td>time / D1-D4</td><td>检查时间</td><td>静态表使用 time，动态表使用 time 作为首个时间点；没有 D1-D4 时默认每个时间点间隔 1 天</td></tr>
+            <tr><td>tem / GCS / tube / site / other_inf</td><td>基础临床信息</td><td>tube、other_inf 的 1/0 会映射为 是/否；site 的 1/0 会映射为 枕叶/非枕叶</td></tr>
+            <tr><td>B_G、B_CRP、B_WBC、B_N、B_Lym、B_PCT、B_AC、B_RBC</td><td>血液指标</td><td>静态基础数据表导入</td></tr>
+            <tr><td>C_G、C_WBC/WBC_n、C_RBC、C_P、C_N、transparency</td><td>脑脊液指标</td><td>动态表按后缀 _1 至 _4 展开为多条病例</td></tr>
+        </tbody>
+    </table>
+</section>
+{% endblock %}

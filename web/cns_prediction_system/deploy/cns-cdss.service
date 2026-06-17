@@ -1,0 +1,17 @@
+[Unit]
+Description=CNS Infection Risk Prediction CDSS
+After=network.target
+
+[Service]
+User=cns
+Group=cns
+WorkingDirectory=/opt/cns-cdss/cns_prediction_system
+Environment="CNS_SECRET_KEY=change-this-secret-key"
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/opt/cns-cdss/venv/bin/gunicorn --workers 2 --threads 2 --timeout 180 --bind 127.0.0.1:8000 wsgi:app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
