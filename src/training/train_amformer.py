@@ -29,6 +29,8 @@ warnings.filterwarnings("ignore")
 os.environ["LOKY_MAX_CPU_COUNT"] = "1"
 os.environ["JOBLIB_MULTIPROCESSING"] = "0"
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
 
 def set_seed(seed: int = 42) -> None:
     random.seed(seed)
@@ -39,8 +41,8 @@ def set_seed(seed: int = 42) -> None:
 
 @dataclass
 class Config:
-    data_path: str = "original.xlsx"
-    output_dir: str = "41706results"
+    data_path: str = str(REPO_ROOT / "data" / "legacy" / "original.xlsx")
+    output_dir: str = str(REPO_ROOT / "results" / "metrics" / "amformer_cv")
     label_col: str = "outcome"
     batch_size: int = 32
     epochs: int = 150

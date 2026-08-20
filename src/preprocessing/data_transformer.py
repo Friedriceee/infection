@@ -1,13 +1,19 @@
 import pandas as pd
 import numpy as np
 import re
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+RAW_DATA_PATH = REPO_ROOT / 'data' / 'legacy' / 'original.xlsx'
+FEATURE_RULES_PATH = REPO_ROOT / 'data' / 'legacy' / 'feature_rules.xlsx'
+OUTPUT_PATH = REPO_ROOT / 'data' / 'processed' / 'encoded_data.csv'
 
 def load_and_clean_original_data():
     """
     加载和清理原始数据
     """
     # 读取原始Excel文件，跳过前两行
-    df = pd.read_excel('original.xlsx')
+    df = pd.read_excel(RAW_DATA_PATH)
     
     # 手动映射列名（基于观察到的数据结构）
     column_mapping = {
@@ -61,7 +67,7 @@ def load_feature_rules():
     """
     加载特征分级规则
     """
-    df_feature = pd.read_excel('feature.xlsx')
+    df_feature = pd.read_excel(FEATURE_RULES_PATH)
     
     # 创建特征规则字典
     feature_rules = {}
@@ -223,7 +229,8 @@ def main():
     amformer_df = amformer_df.rename(columns=rename_dict)
     
     # 保存AMFormer数据
-    amformer_file = "转化后_编码数据_最终版本.csv"
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    amformer_file = OUTPUT_PATH
     amformer_df.to_csv(amformer_file, index=False, encoding='utf-8-sig')
     print(f"✅ AMFormer训练数据已保存到: {amformer_file}")
     print(f"✅ AMFormer数据形状: {amformer_df.shape}")

@@ -3,6 +3,7 @@ import json
 import pickle
 import random
 import warnings
+from pathlib import Path
 import numpy as np
 import pandas as pd
 
@@ -19,10 +20,12 @@ from sklearn.tree import DecisionTreeClassifier  # 新增
 from sklearn.metrics import matthews_corrcoef
 warnings.filterwarnings("ignore")
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
 # =========================
 # 0. 全局设置
 # =========================
-OUTPUT_DIR = "baselineresults"
+OUTPUT_DIR = REPO_ROOT / "results" / "metrics" / "baselines"
 SEED = 42
 THRESHOLD = 0.5
 
@@ -41,7 +44,7 @@ set_seed(SEED)
 # 1. 数据加载
 # =========================
 def load_and_prepare_data():
-    df = pd.read_excel("/Users/wangqinyang.5/Desktop/Infection/original.xlsx")
+    df = pd.read_excel(REPO_ROOT / "data" / "legacy" / "original.xlsx")
     y = df["outcome"].astype(int)
 
     num_cols = [

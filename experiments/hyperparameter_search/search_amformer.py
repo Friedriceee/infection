@@ -31,6 +31,8 @@ warnings.filterwarnings("ignore")
 os.environ["LOKY_MAX_CPU_COUNT"] = "1"
 os.environ["JOBLIB_MULTIPROCESSING"] = "0"
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
 
 # =============================================================
 # 工具函数
@@ -55,8 +57,8 @@ def safe_auc(y_true, y_prob):
 # =============================================================
 @dataclass
 class Config:
-    data_path: str = "/Users/wangqinyang.5/Desktop/Infection/original.xlsx"
-    output_dir: str = "7canshu"
+    data_path: str = str(REPO_ROOT / "data" / "legacy" / "original.xlsx")
+    output_dir: str = str(REPO_ROOT / "experiments" / "hyperparameter_search" / "results")
     label_col: str = "outcome"
 
     batch_size: int = 32

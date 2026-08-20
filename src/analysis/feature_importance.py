@@ -8,8 +8,11 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_auc_score
 import warnings
+from pathlib import Path
 
 warnings.filterwarnings("ignore")
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 # ===========================
@@ -284,8 +287,8 @@ def plot_top10(importance_df, save_path="amformer_top10.png"):
 # 主函数
 # ===========================
 def main():
-    data_path = "original.xlsx"
-    model_path = "best_amformer_model.pth"
+    data_path = REPO_ROOT / "data" / "legacy" / "original.xlsx"
+    model_path = REPO_ROOT / "checkpoints" / "best_amformer_model.pth"
 
     if not os.path.exists(data_path):
         raise FileNotFoundError(f"找不到数据文件：{data_path}")
@@ -331,13 +334,18 @@ def main():
         random_state=42
     )
 
-    importance_df.to_csv("amformer_feature_importance_all.csv", index=False, encoding="utf-8-sig")
-    print("全部特征重要性已保存：amformer_feature_importance_all.csv")
+    output_path = REPO_ROOT / "results" / "feature_importance" / "amformer_feature_importance.csv"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    importance_df.to_csv(output_path, index=False, encoding="utf-8-sig")
+    print(f"全部特征重要性已保存：{output_path}")
 
     print("\nTop 10 特征：")
     print(importance_df.head(10).to_string(index=False))
 
-    plot_top10(importance_df, save_path="amformer_top10.png")
+    plot_top10(
+        importance_df,
+        save_path=REPO_ROOT / "results" / "feature_importance" / "amformer_top10.png",
+    )
 
     print(f"\nBase ROC-AUC = {base_auc:.4f}")
     print("完成。")

@@ -1,68 +1,50 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
-# Virtual environments
-venv/
-venv*/
+# Environments and packaging
 .venv/
-.venv*/
+venv/
 env/
-ENV/
+build/
+dist/
+*.egg-info/
 
-# IDE
-.vscode/
+# IDE and OS files
 .idea/
-*.swp
-*.swo
-
-# System files
+.vscode/
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
-# JoyCode specific
-.joycode/
-
-# Temporary files
-*.tmp
-*.temp
-~*
-
-# Log files
+# Local secrets and logs
+.env
+.env.*
+!.env.example
 *.log
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# Local/raw datasets (tracked legacy files still require a history audit)
+data/raw/
+data/private/
+data/local/
+data/**/*.xlsx
+data/**/*.xls
+data/**/*.csv
+data/**/*.parquet
+data/**/*.feather
+!data/README.md
 
-# Model files (optional - uncomment if models are too large)
-# *.pth
-# *.pkl
-# *.h5
+# Newly generated artifacts
+checkpoints/*.pth
+checkpoints/*.pt
+checkpoints/*.ckpt
+results/**/*.pkl
+results/**/*.joblib
+results/**/generated/
+experiments/**/generated/
 
-# Data files (optional - uncomment if data is sensitive)
-# *.xlsx
-# *.csv
+.ipynb_checkpoints/
